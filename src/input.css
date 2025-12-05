@@ -1,6 +1,7 @@
 /* choose one of the following */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "flowbite/src/themes/default";
 
 /* MINIMAL THEME
@@ -24,3 +25,102 @@
 
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
+/* input.css */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* This makes 'Outfit' the default font for the whole site (including Flowbite) */
+  --font-sans: "Outfit", sans-serif;
+}
+
+.bg-main-blue {
+    background-color: #010922;
+}
+
+.bg-main-green {
+    background-color: #006D4C;
+}
+
+.bg-gradient-green {
+  /* I added the first color (#708238) again at the end for a smoother loop */
+  background-image: linear-gradient(to right, #708238, #006D4C, #708238);
+  
+  /* CRITICAL: Make the background double the size so it can move */
+  background-size: 200% auto;
+  
+  /* CRITICAL: Enable the animation smoothness */
+  transition: background-position 0.5s ease-in-out;
+}
+
+.color-main-green {
+  color: #006D4C;
+}
+
+.color-main-green-strong {
+  color: #01553c;
+}
+
+.hover\:color-main-green-strong {
+    &:hover {
+        @media (hover: hover) {
+        color: #01553c;
+        }
+    }
+}
+
+.md\:hover\:color-main-green-strong {
+    @media (width >= 48rem) {
+      &:hover {
+        @media (hover: hover) {
+          color: #01553c;
+
+        }
+      }
+    }
+}
+
+.hover\:color-main-green {
+    &:hover {
+        @media (hover: hover) {
+        color: #006D4C;
+        font-weight: var(--font-weight-semibold)
+        }
+    }
+}
+
+.md\:hover\:color-main-green {
+    @media (width >= 48rem) {
+      &:hover {
+        @media (hover: hover) {
+          color: #006D4C;
+          font-weight: var(--font-weight-semibold)
+        }
+      }
+    }
+}
+
+.focus\:ring-green-medium {
+    &:focus {
+      --tw-ring-color: #01553c;
+    }
+}
+
+
+.hover\:animate-gradient {
+    &:hover {
+        @media (hover: hover) {
+            background-position: right center;
+        }
+    }
+}
+
+/* 3. Responsive Hover Class (Desktop only): Triggers animation on medium screens+ */
+.md\:hover\:animate-gradient {
+    @media (width >= 48rem) {
+      &:hover {
+        @media (hover: hover) {
+            background-position: right center;
+        }
+      }
+    }
+}
