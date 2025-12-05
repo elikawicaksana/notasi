@@ -29,12 +29,19 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* This makes 'Outfit' the default font for the whole site (including Flowbite) */
+  /* Font Setup */
   --font-sans: "Outfit", sans-serif;
+  
+  /* Color Variables */
+  --color-footer-bg: #040911;
+  
+  /* ADD THESE TWO LINES: */
+  --color-moss-light: #708238;
+  --color-moss-dark: #006D4C;
 }
 
 .bg-main-blue {
-    background-color: #010922;
+    background-color: #040911;
 }
 
 .bg-main-green {
@@ -54,6 +61,9 @@
 
 .color-main-green {
   color: #006D4C;
+}
+.color-main-green-gradient {
+  color: linear-gradient(to right, #708238, #006D4C);
 }
 
 .color-main-green-strong {
