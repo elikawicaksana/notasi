@@ -1,7 +1,7 @@
 /* choose one of the following */
 
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "flowbite/src/themes/default";
 
 /* MINIMAL THEME
@@ -31,6 +31,7 @@
 @theme {
   /* Font Setup */
   --font-sans: "Outfit", sans-serif;
+  --font-mono:"Outfit", sans-serif;
   
   /* Color Variables */
   --color-footer-bg: #040911;
@@ -38,6 +39,10 @@
   /* ADD THESE TWO LINES: */
   --color-moss-light: #708238;
   --color-moss-dark: #006D4C;
+}
+
+.max-w-lg {
+    max-width: var(--breakpoint-lg);
 }
 
 .bg-main-blue {
@@ -68,6 +73,16 @@
 
 .color-main-green-strong {
   color: #01553c;
+}
+
+.text-2xl {
+  font-size: var(--text-2xl);
+  line-height: var(--tw-leading, var(--text-2xl--line-height));
+}
+
+.text-3xl {
+  font-size: var(--text-3xl);
+  line-height: var(--tw-leading, var(--text-3xl--line-height));
 }
 
 .hover\:color-main-green-strong {
