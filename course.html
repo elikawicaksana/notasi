@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notasi | Homepage</title>
+    <link href="src/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="dark bg-main-blue font-sans">
+<nav class="bg-main-blue fixed w-full z-20 top-0 start-0 border-b border-default">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="course.html"><button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-medium leading-4 text-sm px-3 py-2 focus:outline-none">Courses</button></a>
+    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <a href="login.php"><button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-medium leading-4 text-sm px-3 py-2 focus:outline-none">Sign In</button></a>
+    </div>
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+        <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="dist/img/logo.png" class="h-8" alt="Flowbite Logo">
+        </a>
+    </div>      
+  </div>
+</nav>
+<main class="pt-15">
+    <div class="relative py-12 flex justify-center">
+        <span class="bg-gradient-to-r from-moss-light to-moss-dark bg-clip-text text-transparent text-5xl font-semibold uppercase tracking-wider">
+            Courses
+        </span>
+    </div>
+    <section class="py-5 px-4 md:px-8 bg-main-blue relative">
+        <div class="max-w-screen-xl mx-auto mb-16">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-white text-2xl font-semibold border-l-4 border-[#006D4C] pl-4">
+                    Pengantar Teknik Vokal
+                </h3>
+                <div class="flex gap-2">
+                    <button onclick="document.getElementById('carousel-1').scrollBy({left: -300, behavior: 'smooth'})" class="p-2 rounded-full border border-gray-600 hover:bg-[#006D4C] hover:border-[#006D4C] text-white transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button onclick="document.getElementById('carousel-1').scrollBy({left: 300, behavior: 'smooth'})" class="p-2 rounded-full border border-gray-600 hover:bg-[#006D4C] hover:border-[#006D4C] text-white transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="carousel-1" class="flex overflow-x-auto gap-5 pb-4 snap-x snap-mandatory scroll-smooth no-scrollbar">
+                <a href="course-detail.php?id=1" class="block min-w-[280px] md:min-w-[320px] snap-center group relative rounded-xl overflow-hidden cursor-pointer bg-gray-900 border border-white/10 hover:border-[#006D4C] transition-all">
+                    <img src="dist/img/singing.png" class="w-full h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" alt="Thumbnail">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-12 h-12 bg-[#006D4C] rounded-full flex items-center justify-center shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                    <div class="p-4 relative z-10">
+                        <span class="text-xs font-semibold text-[#708238] uppercase tracking-wide">Coach Sheila</span>
+                        <h4 class="text-white text-lg font-bold mt-1 leading-snug group-hover:text-[#006D4C] transition-colors">How to Find Your True Voice</h4>
+                        <p class="text-gray-400 text-xs mt-2">12 Menit • Pemula</p>
+                    </div>
+                </a>
+                <a href="course-detail.php?id=2" class="block min-w-[280px] md:min-w-[320px] snap-center group relative rounded-xl overflow-hidden cursor-pointer bg-gray-900 border border-white/10 hover:border-[#006D4C] transition-all">
+                    <img src="dist/img/singing.png" class="w-full h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" alt="Thumbnail">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-12 h-12 bg-[#006D4C] rounded-full flex items-center justify-center shadow-lg"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    </div>
+                    <div class="p-4 relative z-10">
+                        <span class="text-xs font-semibold text-[#708238] uppercase tracking-wide">Coach Tony</span>
+                        <h4 class="text-white text-lg font-bold mt-1 leading-snug group-hover:text-[#006D4C] transition-colors">The Power of Movement</h4>
+                        <p class="text-gray-400 text-xs mt-2">15 Menit • Menengah</p>
+                    </div>
+                </a>
+                <a href="course-detail.php?id=3" class="block min-w-[280px] md:min-w-[320px] snap-center group relative rounded-xl overflow-hidden cursor-pointer bg-gray-900 border border-white/10 hover:border-[#006D4C] transition-all">
+                    <img src="dist/img/singing.png" class="w-full h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" alt="Thumbnail">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-12 h-12 bg-[#006D4C] rounded-full flex items-center justify-center shadow-lg"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    </div>
+                    <div class="p-4 relative z-10">
+                        <span class="text-xs font-semibold text-[#708238] uppercase tracking-wide">Coach Cate</span>
+                        <h4 class="text-white text-lg font-bold mt-1 leading-snug group-hover:text-[#006D4C] transition-colors">Defining Yourself As A Singer</h4>
+                        <p class="text-gray-400 text-xs mt-2">20 Menit • Lanjutan</p>
+                    </div>
+                </a>
+                <a href="course-detail.php?id=4" class="block min-w-[280px] md:min-w-[320px] snap-center group relative rounded-xl overflow-hidden cursor-pointer bg-gray-900 border border-white/10 hover:border-[#006D4C] transition-all">
+                    <img src="dist/img/singing.png" class="w-full h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" alt="Thumbnail">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-12 h-12 bg-[#006D4C] rounded-full flex items-center justify-center shadow-lg"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    </div>
+                    <div class="p-4 relative z-10">
+                        <span class="text-xs font-semibold text-[#708238] uppercase tracking-wide">Coach Darcy</span>
+                        <h4 class="text-white text-lg font-bold mt-1 leading-snug group-hover:text-[#006D4C] transition-colors">The Science of Singing</h4>
+                        <p class="text-gray-400 text-xs mt-2">18 Menit • Teori</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="max-w-screen-xl mx-auto mb-16">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-white text-2xl font-semibold border-l-4 border-[#006D4C] pl-4">
+                    Pernapasan Diafragma
+                </h3>
+                <div class="flex gap-2">
+                    <button onclick="document.getElementById('carousel-2').scrollBy({left: -300, behavior: 'smooth'})" class="p-2 rounded-full border border-gray-600 hover:bg-[#006D4C] hover:border-[#006D4C] text-white transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button onclick="document.getElementById('carousel-2').scrollBy({left: 300, behavior: 'smooth'})" class="p-2 rounded-full border border-gray-600 hover:bg-[#006D4C] hover:border-[#006D4C] text-white transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="carousel-2" class="flex overflow-x-auto gap-5 pb-4 snap-x snap-mandatory scroll-smooth no-scrollbar">
+                <a href="course-detail.php?id=5" class="block min-w-[280px] md:min-w-[320px] snap-center group relative rounded-xl overflow-hidden cursor-pointer bg-gray-900 border border-white/10 hover:border-[#006D4C] transition-all">
+                    <img src="dist/img/singing.png" class="w-full h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" alt="Thumbnail">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-12 h-12 bg-[#006D4C] rounded-full flex items-center justify-center shadow-lg"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    </div>
+                    <div class="p-4 relative z-10">
+                        <span class="text-xs font-semibold text-[#708238] uppercase tracking-wide">Coach Sarah</span>
+                        <h4 class="text-white text-lg font-bold mt-1 leading-snug group-hover:text-[#006D4C] transition-colors">Singing With Vibrato</h4>
+                        <p class="text-gray-400 text-xs mt-2">10 Menit • Teknik</p>
+                    </div>
+                </a>
+                <a href="course-detail.php?id=6" class="block min-w-[280px] md:min-w-[320px] snap-center group relative rounded-xl overflow-hidden cursor-pointer bg-gray-900 border border-white/10 hover:border-[#006D4C] transition-all">
+                    <img src="dist/img/singing.png" class="w-full h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" alt="Thumbnail">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-12 h-12 bg-[#006D4C] rounded-full flex items-center justify-center shadow-lg"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    </div>
+                    <div class="p-4 relative z-10">
+                        <span class="text-xs font-semibold text-[#708238] uppercase tracking-wide">Coach Mike</span>
+                        <h4 class="text-white text-lg font-bold mt-1 leading-snug group-hover:text-[#006D4C] transition-colors">Hit The High Notes</h4>
+                        <p class="text-gray-400 text-xs mt-2">14 Menit • Lanjutan</p>
+                    </div>
+                </a>
+                <a href="course-detail.php?id=7" class="block min-w-[280px] md:min-w-[320px] snap-center group relative rounded-xl overflow-hidden cursor-pointer bg-gray-900 border border-white/10 hover:border-[#006D4C] transition-all">
+                    <img src="dist/img/singing.png" class="w-full h-48 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" alt="Thumbnail">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-12 h-12 bg-[#006D4C] rounded-full flex items-center justify-center shadow-lg"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    </div>
+                    <div class="p-4 relative z-10">
+                        <span class="text-xs font-semibold text-[#708238] uppercase tracking-wide">Coach Lisa</span>
+                        <h4 class="text-white text-lg font-bold mt-1 leading-snug group-hover:text-[#006D4C] transition-colors">Beautiful Harmonies</h4>
+                        <p class="text-gray-400 text-xs mt-2">25 Menit • Group</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="bg-footer-bg">
+    <div class="relative py-8">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-transparent bg-gradient-to-r from-moss-light to-moss-dark bg-origin-border h-[0.5px]"></div>
+        </div>
+        <div class="relative flex justify-center">
+            <span class="bg-footer-bg px-4">
+                <span class="bg-gradient-to-r from-moss-light to-moss-dark bg-clip-text text-transparent text-md font-semibold uppercase tracking-wider">
+                    Ketahui Lebih Banyak Tentang Kami
+                </span>
+            </span>
+        </div>
+    </div>
+    <div class="mx-auto max-w-screen-xl px-4 pb-16 flex flex-col items-center text-center">
+        <div class="mb-5">
+            <img src="dist/img/logo.png" alt="Notasi Logo" class="h-14 mx-auto" />
+        </div>
+        <div class="space-y-3 text-sm text-white font-light">
+            <a href="mailto:tanya@darinadapertama.com" class="hover:text-white transition-colors">
+                tanya@darinadapertama.com
+            </a>
+            <p>
+                Copyright © 2025 All rights reserved
+            </p>
+        </div>
+    </div>
+</footer>
+<script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+</body>
+</html>
