@@ -31,24 +31,34 @@
         <div class="lg:col-span-5 flex flex-col items-center justify-center px-6 py-8 mx-auto w-full h-full bg-[#040911] relative z-10">    
             <div class="w-full sm:max-w-md">
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl mb-8">
-                    Welcome back!
+                    Start Your Journey From Here!
                 </h1>
                 <form class="space-y-4 md:space-y-6" action="#">
                     <div>
                         <label for="username" class="block mb-2 text-sm font-medium text-white">Username</label>
-                        <input type="text" name="username" id="username" 
-                               class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" 
-                               placeholder="e.g. userdummy" required="">
+                        <input type="text" name="username" id="username" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" placeholder="e.g. doejohnuser" required="">
+                    </div>
+                    <div>
+                        <label for="full-name" class="block mb-2 text-sm font-medium text-white">Full Name</label>
+                        <input type="text" name="full-name" id="full-name" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" placeholder="e.g. John Doe" required="">
+                    </div>
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-medium text-white">Email</label>
+                        <input type="text" name="email" id="email" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" placeholder="example@gmail.com" required="">
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
                         <input type="password" name="password" id="password" placeholder="••••••••••••" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" required="">
                     </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-white">Confirm Password</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••••••" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" required="">
+                    </div>
                     <button type="submit" class="w-full text-white bg-gradient-to-r from-[#708238] to-[#006D4C] hover:brightness-110 focus:ring-4 focus:outline-none focus:ring-[#006D4C]/50 font-medium rounded-md text-sm px-5 py-2.5 text-center transition-all">
-                        Sign in
+                        Sign Up
                     </button>
                     <p class="text-md font-light text-gray-400">
-                        Don't have an account yet? <a href="register.php" class="font-medium text-[#708238] hover:underline hover:text-[#006D4C]">Sign up</a>
+                        Already have an account? <a href="login.php" class="font-medium text-[#708238] hover:underline hover:text-[#006D4C]">Login here</a>
                     </p>
                 </form>
             </div>
