@@ -53,6 +53,10 @@
     background-color: #006D4C;
 }
 
+.bg-secondary-green {
+    background-color: #708238;
+}
+
 .bg-gradient-green {
   /* I added the first color (#708238) again at the end for a smoother loop */
   background-image: linear-gradient(to right, #708238, #006D4C, #708238);
@@ -73,6 +77,10 @@
 
 .color-main-green-strong {
   color: #01553c;
+}
+
+.color-secondary-green {
+  color: #708238;
 }
 
 .text-2xl {
