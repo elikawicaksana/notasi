@@ -41,6 +41,14 @@
   --color-moss-dark: #006D4C;
 }
 
+.ring-green-main {
+  --tw-ring-color:#708238;
+}
+
+.border-green {
+  border-color: #708238;
+}
+
 .max-w-lg {
     max-width: var(--breakpoint-lg);
 }
@@ -55,6 +63,10 @@
 
 .bg-secondary-green {
     background-color: #708238;
+}
+
+.bg-form-dark {
+  background-color: #121821;
 }
 
 .bg-gradient-green {

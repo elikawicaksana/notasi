@@ -16,66 +16,67 @@
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
+
+        input:focus {
+            border-color: #708238 !important;
+            --tw-ring-color: #708238 !important;
+            /* Ini bikin efek glow hijaunya */
+            box-shadow: 0 0 0 1px #708238 !important; 
+            outline: none !important;
+        }
     </style>
 </head>
 <body class="dark bg-main-blue font-sans">
-<main class="">
-    <section class="relative">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <a href="index.html" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                <img class="w-32 h-12 mr-2" src="dist/img/logo.png" alt="logo">
-            </a>
-            <div class="w-full bg-white shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                        Sign in to your account
-                    </h1>
-                    <form class="space-y-4 md:space-y-6" action="#">
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+<section class="min-h-screen grid grid-cols-1 lg:grid-cols-12">
+        <div class="lg:col-span-5 flex flex-col items-center justify-center px-6 py-8 mx-auto w-full h-full bg-[#040911] relative z-10">    
+            <div class="w-full sm:max-w-md">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl mb-8">
+                    Welcome back!
+                </h1>
+                <form class="space-y-4 md:space-y-6" action="#">
+                    <div>
+                        <label for="username" class="block mb-2 text-sm font-medium text-white">Username</label>
+                        <input type="text" name="username" id="username" 
+                               class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" 
+                               placeholder="userdummy" required="">
+                    </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" required="">
+                    </div>
+                    <button type="submit" class="w-full text-white bg-gradient-to-r from-[#708238] to-[#006D4C] hover:brightness-110 focus:ring-4 focus:outline-none focus:ring-[#006D4C]/50 font-medium rounded-md text-sm px-5 py-2.5 text-center transition-all">
+                        Sign in
+                    </button>
+                    <p class="text-sm font-light text-gray-400">
+                        Don't have an account yet? <a href="#" class="font-medium text-[#708238] hover:underline hover:text-[#006D4C]">Sign up</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="hidden lg:block lg:col-span-7 w-full h-full p-4 bg-[#040911]">
+            <div class="relative w-full h-full rounded-[2rem] overflow-hidden shadow-2xl border border-gray-800">
+                <img class="absolute inset-0 w-full h-full object-cover" src="dist/img/bg-login.jpg" alt="Login Background">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#040911] via-[#006D4C]/40 to-transparent opacity-90"></div>
+                <div class="absolute inset-0 z-10 flex flex-col justify-end p-12 text-white">
+                    <img src="dist/img/logo.png" class="h-12 mb-10 invert brightness-0 contrast-200 self-start" alt="Logo White">
+                    <h2 class="text-5xl font-bold leading-tight mb-4">
+                        Unlock Your True Voice.
+                    </h2>
+                    <p class="text-lg text-gray-200 font-light max-w-md mb-8">
+                        Bergabunglah dengan ribuan penyanyi lainnya dan mulailah perjalanan musikmu bersama Notasi hari ini.
+                    </p>
+                    <div class="flex items-center gap-4 p-4 bg-white/10 backdrop-blur-sm rounded-xl w-fit">
+                        <div class="flex -space-x-4">
+                            <img class="w-10 h-10 border-2 border-[#fffff] rounded-full" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=64&h=64" alt="">
+                            <img class="w-10 h-10 border-2 border-[#fffff] rounded-full" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=64&h=64" alt="">
+                            <img class="w-10 h-10 border-2 border-[#fffff] rounded-full" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=64&h=64" alt="">
                         </div>
-                        <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                        </div>
-                        <button type="submit" class="w-full text-white bg-gradient-green hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm px-5 py-2.5 text-center dark:bg-gradient-green dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
-                        <p class="text-sm font-light text-white dark:text-white">
-                            Don't have an account yet? <a href="#" class="font-medium color-secondary-green hover:underline dark:color-secondary-green">Create one!</a>
-                        </p>
-                    </form>
+                        <span class="text-sm font-medium text-white">Bergabung dengan 11.4k Siswa</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-</main>
-<footer class="bg-footer-bg">
-    <div class="relative py-8">
-        <div class="absolute inset-0 flex items-center" aria-hidden="true">
-            <div class="w-full border-t border-transparent bg-gradient-to-r from-moss-light to-moss-dark bg-origin-border h-[0.5px]"></div>
-        </div>
-        <div class="relative flex justify-center">
-            <span class="bg-footer-bg px-4">
-                <span class="bg-gradient-to-r from-moss-light to-moss-dark bg-clip-text text-transparent text-md font-semibold uppercase tracking-wider">
-                    Ketahui Lebih Banyak Tentang Kami
-                </span>
-            </span>
-        </div>
-    </div>
-    <div class="mx-auto max-w-screen-xl px-4 pb-16 flex flex-col items-center text-center">
-        <div class="mb-5">
-            <img src="dist/img/logo.png" alt="Notasi Logo" class="h-14 mx-auto" />
-        </div>
-        <div class="space-y-3 text-sm text-white font-light">
-            <a href="mailto:tanya@darinadapertama.com" class="hover:text-white transition-colors">
-                tanya@darinadapertama.com
-            </a>
-            <p>
-                Copyright © 2025 All rights reserved
-            </p>
-        </div>
-    </div>
-</footer>
-<script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </body>
 </html>
