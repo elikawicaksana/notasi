@@ -47,8 +47,8 @@
                     <button type="submit" class="w-full text-white bg-gradient-to-r from-[#708238] to-[#006D4C] hover:brightness-110 focus:ring-4 focus:outline-none focus:ring-[#006D4C]/50 font-medium rounded-md text-sm px-5 py-2.5 text-center transition-all">
                         Sign in
                     </button>
-                    <p class="text-sm font-light text-gray-400">
-                        Don't have an account yet? <a href="#" class="font-medium text-[#708238] hover:underline hover:text-[#006D4C]">Sign up</a>
+                    <p class="text-md font-light text-gray-400">
+                        Don't have an account yet? <a href="register.php" class="font-medium text-[#708238] hover:underline hover:text-[#006D4C]">Sign up</a>
                     </p>
                 </form>
             </div>
