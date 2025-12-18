@@ -3,6 +3,6 @@
 	$destroy=session_destroy();
 	setcookie('username', '', 0, '/');
 	if($destroy=true){
-		header("location: ../index.html");
+		header("location: ../index.php");
 	}
 ?>

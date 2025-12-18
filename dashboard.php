@@ -22,7 +22,7 @@
         if(!isset($_SESSION['username']) && !isset($_SESSION['passwd'])){
             echo "<script type='text/javascript'>\n";
             echo "alert('You are not logged in!');";
-            echo "window.location = ('index.html');";
+            echo "window.location = ('index.php');";
             echo "</script>";
         }
 
@@ -40,7 +40,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
                         </svg>
                     </button>
-                    <a href="index.html" class="flex ms-2 md:me-24">
+                    <a href="index.php" class="flex ms-2 md:me-24">
                         <img src="dist/img/logo.png" class="h-8 me-3" alt="Notasi Logo" />
                     </a>
                 </div>

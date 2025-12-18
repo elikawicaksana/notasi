@@ -8,19 +8,64 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <?php
+        include 'config/koneksi.php';
+    ?>
 </head>
 <body class="dark bg-main-blue font-sans">
 <nav class="bg-main-blue fixed w-full z-20 top-0 start-0 border-b border-default">
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="course.html"><button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-medium leading-4 text-sm px-3 py-2 focus:outline-none">Courses</button></a>
-    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        <a href="login.php"><button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-medium leading-4 text-sm px-3 py-2 focus:outline-none">Sign In</button></a>
-    </div>
-    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-        <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="dist/img/logo.png" class="h-8" alt="Flowbite Logo">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative">
+    <div class="relative z-10">
+        <a href="course.html">
+            <button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-medium leading-4 text-sm px-3 py-2 focus:outline-none">
+                Courses
+            </button>
         </a>
-    </div>      
+    </div>
+    <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-1 z-0 flex">
+        <a href="index.php" class="flex items-center">
+            <img src="dist/img/logo.png" class="h-8 md:h-8" alt="Notasi Logo">
+        </a>
+    </div>
+    <?php 
+        if(isset($_SESSION['username']) && isset($_SESSION['passwd'])){
+            echo "
+                <div class='relative z-10 flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse'>
+                    <button type='button' class='flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary' id='user-menu-button' aria-expanded='false' data-dropdown-toggle='user-dropdown' data-dropdown-placement='bottom'>
+                        <span class='sr-only'>Open user menu</span>
+                        <img class='w-8 h-8 rounded-full' src='https://flowbite.com/docs/images/people/profile-picture-5.jpg' alt='user photo'>
+                    </button>
+                    
+                    <div class='z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44' id='user-dropdown'>
+                        <div class='px-4 py-3 text-sm border-b border-default'>
+                            <span class='block text-heading font-medium'>Joseph McFall</span>
+                            <span class='block text-body truncate'>name@flowbite.com</span>
+                        </div>
+                        <ul class='p-2 text-sm text-body font-medium' aria-labelledby='user-menu-button'>
+                        <li>
+                            <a href='#' class='inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded'>Dashboard</a>
+                        </li>
+                        <li>
+                            <a href='#' class='inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded'>Settings</a>
+                        </li>
+                        <li>
+                            <a href='#' class='inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded'>Earnings</a>
+                        </li>
+                        <li>
+                            <a href='proses/logout.php' class='inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded'>Sign out</a>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            ";
+        }else{
+            echo "
+                <div class='flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse'>
+                    <a href='login.php'><button type='button' class='text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-medium leading-4 text-sm px-3 py-2 focus:outline-none'>Sign In</button></a>
+                </div>
+            ";
+        }
+    ?>
   </div>
 </nav>
 <main class="pt-15">
@@ -197,17 +242,6 @@
                 </div>
             </div>
             <div class="relative pt-12">
-                <div class="bg-gradient-to-r from-[#708238] to-[#006D4C] rounded-2xl p-8 pt-20 text-center shadow-lg h-full flex flex-col items-center">                   
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden shadow-xl bg-gray-700">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop" alt="Lauren" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="text-white font-semibold text-2xl mb-4">Lauren</h3>
-                    <p class="text-white/90 text-xl leading-relaxed font-light">
-                        Videonya jelas dan praktis. Bisa belajar kapan aja, sertifikatnya juga membantu.
-                    </p>
-                </div>
-            </div>
-            <div class="relative pt-12">
                 <div class="bg-gradient-to-r from-[#708238] to-[#006D4C] rounded-2xl p-8 pt-20 text-center shadow-lg h-full flex flex-col items-center">
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden shadow-xl bg-gray-700">
                         <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1000&auto=format&fit=crop" alt="Elika" class="w-full h-full object-cover">
@@ -215,6 +249,17 @@
                     <h3 class="text-white font-semibold text-2xl mb-4">Elika</h3>
                     <p class="text-white/90 text-xl leading-relaxed font-light">
                         Artikulasiku jauh lebih baik setelah ikut kelasnya. Sangat membantu untuk konten!
+                    </p>
+                </div>
+            </div>
+            <div class="relative pt-12">
+                <div class="bg-gradient-to-r from-[#708238] to-[#006D4C] rounded-2xl p-8 pt-20 text-center shadow-lg h-full flex flex-col items-center">                   
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden shadow-xl bg-gray-700">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop" alt="Lauren" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-white font-semibold text-2xl mb-4">Lauren</h3>
+                    <p class="text-white/90 text-xl leading-relaxed font-light">
+                        Videonya jelas dan praktis. Bisa belajar kapan aja, sertifikatnya juga membantu.
                     </p>
                 </div>
             </div>
@@ -274,6 +319,6 @@
         </div>
     </div>
 </footer>
-<script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+<script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
 </body>
 </html>
