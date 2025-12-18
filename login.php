@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notasi | Homepage</title>
+    <title>Notasi | Login</title>
     <link href="src/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,15 @@
             outline: none !important;
         }
     </style>
+    <?php
+        session_start();
+        if(isset($_SESSION['username']) && isset($_SESSION['passwd'])){
+            echo "<script type='text/javascript'>\n";
+            echo "alert('You already login!');";
+            echo "window.location = ('dashboard.php');";
+            echo "</script>";
+        }
+    ?>
 </head>
 <body class="dark bg-main-blue font-sans">
 <section class="min-h-screen grid grid-cols-1 lg:grid-cols-12">
@@ -33,7 +42,7 @@
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl mb-8">
                     Welcome back!
                 </h1>
-                <form class="space-y-4 md:space-y-6" action="#">
+                <form class="space-y-4 md:space-y-6" action="proses/login-proses.php" method="post" autocomplete="off">
                     <div>
                         <label for="username" class="block mb-2 text-sm font-medium text-white">Username</label>
                         <input type="text" name="username" id="username" 

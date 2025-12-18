@@ -65,6 +65,10 @@
     background-color: #708238;
 }
 
+.bg-green-dark {
+    background-color: #161D17;
+}
+
 .bg-form-dark {
   background-color: #121821;
 }
@@ -93,6 +97,10 @@
 
 .color-secondary-green {
   color: #708238;
+}
+
+.text-red {
+  color: #ff0000;
 }
 
 .text-2xl {

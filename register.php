@@ -25,6 +25,17 @@
             outline: none !important;
         }
     </style>
+    <?php
+        session_start();
+        if(isset($_SESSION['username']) && isset($_SESSION['passwd'])){
+            echo "<script type='text/javascript'>\n";
+            echo "alert('You already logged in!');";
+            echo "window.location = ('index.html');";
+            echo "</script>";
+        }
+
+        include 'config/koneksi.php';
+    ?>
 </head>
 <body class="dark bg-main-blue font-sans">
 <section class="min-h-screen grid grid-cols-1 lg:grid-cols-12">
@@ -33,14 +44,14 @@
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl mb-8">
                     Start Your Journey From Here!
                 </h1>
-                <form class="space-y-4 md:space-y-6" action="#">
+                <form class="space-y-4 md:space-y-6" action="proses/register-proses.php" method="post" autocomplete="off">
                     <div>
                         <label for="username" class="block mb-2 text-sm font-medium text-white">Username</label>
-                        <input type="text" name="username" id="username" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" placeholder="e.g. doejohnuser" required="">
+                        <input type="text" name="username" id="username" maxlength="18" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" placeholder="e.g. doejohnuser" required="">
                     </div>
                     <div>
                         <label for="full-name" class="block mb-2 text-sm font-medium text-white">Full Name</label>
-                        <input type="text" name="full-name" id="full-name" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" placeholder="e.g. John Doe" required="">
+                        <input type="text" name="name" id="full-name" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" placeholder="e.g. John Doe" required="">
                     </div>
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-white">Email</label>
@@ -48,11 +59,11 @@
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••••••" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" required="">
+                        <input type="password" name="password" id="password" placeholder="••••••••••••" maxlength="18" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" required="">
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-white">Confirm Password</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••••••" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" required="">
+                        <input type="password" name="retype" id="retype" placeholder="••••••••••••" maxlength="18" class="bg-gray-800 border border-gray-600 text-white sm:text-sm rounded-md block w-full p-2.5 placeholder-gray-400" required="">
                     </div>
                     <button type="submit" class="w-full text-white bg-gradient-to-r from-[#708238] to-[#006D4C] hover:brightness-110 focus:ring-4 focus:outline-none focus:ring-[#006D4C]/50 font-medium rounded-md text-sm px-5 py-2.5 text-center transition-all">
                         Sign Up
