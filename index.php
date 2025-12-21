@@ -23,7 +23,7 @@
         </a>
     </div>
     <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-1 z-0 flex">
-        <a href="index.php" class="flex items-center">
+        <a href="index.php" class="flex items-center">  
             <img src="dist/img/logo.png" class="h-8 md:h-8" alt="Notasi Logo">
         </a>
     </div>
