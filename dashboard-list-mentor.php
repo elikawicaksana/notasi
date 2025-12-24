@@ -24,16 +24,16 @@
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $start = ($page > 1) ? ($page * $limit) - $limit : 0;
 
-    // Hitung Total Data (Hanya Role Student)
+    // Hitung Total Data (Hanya Role Mentor)
     // Jika nanti mau nambah fitur search, tambahkan WHERE name LIKE '%$keyword%' di sini
-    $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM tb_user WHERE role = 'Student'");
+    $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM tb_user WHERE role = 'Mentor'");
     $rowTotal = mysqli_fetch_assoc($queryTotal);
     $totalData = $rowTotal['total'];
     $totalPages = ceil($totalData / $limit);
 
     // Ambil Data Siswa (Limit sesuai halaman)
     // ORDER BY id_user DESC agar siswa terbaru muncul paling atas
-    $queryStudents = mysqli_query($conn, "SELECT * FROM tb_user WHERE role = 'Student' ORDER BY id_user DESC LIMIT $start, $limit");
+    $queryMentors = mysqli_query($conn, "SELECT * FROM tb_user WHERE role = 'Mentor' ORDER BY id_user DESC LIMIT $start, $limit");
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +41,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notasi | Student List</title>
+    <title>Notasi | Mentor List</title>
     <link href="src/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,16 +101,20 @@
                     
                     <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 p-4 border-b border-default-medium">
                         <div class="w-full md:w-auto">
-                            <h2 class="text-2xl font-semibold text-heading">Students List</h2>
+                            <h2 class="text-2xl font-semibold text-heading">Mentors List</h2>
                             <p class="text-[#708238] font-medium">Active Members</p>
                         </div>
-                        <button type="button" class="inline-flex items-center text-white bg-[#708238] hover:bg-[#006D4C] box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                            <svg class="w-4 h-4 me-1.5 -ms-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
-                            </svg>
-                            Add New Student
-                        </button>
+                        
+                        <div class="flex flex-col md:flex-row items-center w-full md:w-auto space-y-2 md:space-y-0 md:space-x-3">
+                            <div class="relative w-full md:w-auto">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-body" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
+                                </div>
+                                <input type="text" id="simple-search" class="block w-full max-w-96 ps-9 pe-3 py-2 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Search Mentor...">
+                            </div>
+                        </div>
                     </div>
+
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm text-left rtl:text-right text-body">
                             <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
@@ -124,8 +128,8 @@
                             <tbody>
                                 <?php 
                                     // LOOP DATA DARI DATABASE
-                                    if(mysqli_num_rows($queryStudents) > 0){
-                                        while($row = mysqli_fetch_assoc($queryStudents)) {
+                                    if(mysqli_num_rows($queryMentors) > 0){
+                                        while($row = mysqli_fetch_assoc($queryMentors)) {
                                             $idUser = $row['id_user'];
                                             // Fallback foto profile
                                             $foto = !empty($row['foto']) ? $row['foto'] : "https://flowbite.com/docs/images/people/profile-picture-5.jpg";
@@ -163,8 +167,8 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="edit_student.php?id=<?= $idUser ?>" class="font-medium text-[#708238] hover:text-[#8FA348] hover:underline transition-colors">Edit</a> |
-                                        <a href="delete_student.php?id=<?= $idUser ?>" class="font-medium text-fg-danger hover:text-danger hover:underline transition-colors">Delete</a>
+                                        <a href="edit_Mentor.php?id=<?= $idUser ?>" class="font-medium text-[#708238] hover:text-[#8FA348] hover:underline transition-colors">Edit</a> |
+                                        <a href="delete_Mentor.php?id=<?= $idUser ?>" class="font-medium text-fg-danger hover:text-danger hover:underline transition-colors">Delete</a>
                                     </td>
                                 </tr>
                                 <?php 
@@ -173,7 +177,7 @@
                                 ?>
                                     <tr>
                                         <td colspan="5" class="px-6 py-8 text-center text-gray-500">
-                                            Belum ada data student.
+                                            Belum ada data Mentor.
                                         </td>
                                     </tr>
                                 <?php } ?>
