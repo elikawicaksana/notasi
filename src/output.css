@@ -928,6 +928,9 @@
   .order-2 {
     order: 2;
   }
+  .col-span-2 {
+    grid-column: span 2 / span 2;
+  }
   .container {
     width: 100%;
     @media (width >= 40rem) {
@@ -949,23 +952,11 @@
   .mx-auto {
     margin-inline: auto;
   }
-  .-ms-0 {
-    margin-inline-start: calc(var(--spacing) * -0);
-  }
-  .-ms-0\.5 {
-    margin-inline-start: calc(var(--spacing) * -0.5);
-  }
   .ms-2 {
     margin-inline-start: calc(var(--spacing) * 2);
   }
   .ms-3 {
     margin-inline-start: calc(var(--spacing) * 3);
-  }
-  .me-1 {
-    margin-inline-end: calc(var(--spacing) * 1);
-  }
-  .me-1\.5 {
-    margin-inline-end: calc(var(--spacing) * 1.5);
   }
   .me-3 {
     margin-inline-end: calc(var(--spacing) * 3);
@@ -1735,6 +1726,9 @@
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -1779,6 +1773,9 @@
   }
   .gap-5 {
     gap: calc(var(--spacing) * 5);
+  }
+  .gap-6 {
+    gap: calc(var(--spacing) * 6);
   }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
@@ -2042,6 +2039,9 @@
   .border-gray-200 {
     border-color: var(--color-gray-200);
   }
+  .border-gray-300 {
+    border-color: var(--color-gray-300);
+  }
   .border-gray-600 {
     border-color: var(--color-gray-600);
   }
@@ -2138,6 +2138,9 @@
   }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
+  }
+  .bg-gray-200 {
+    background-color: var(--color-gray-200);
   }
   .bg-gray-700 {
     background-color: var(--color-gray-700);
@@ -3036,13 +3039,6 @@
       }
     }
   }
-  .hover\:bg-\[\#708238\] {
-    &:hover {
-      @media (hover: hover) {
-        background-color: #708238;
-      }
-    }
-  }
   .hover\:bg-blue-800 {
     &:hover {
       @media (hover: hover) {
@@ -3518,6 +3514,13 @@
   .dark\:text-white {
     &:where(.dark, .dark *) {
       color: var(--color-white);
+    }
+  }
+  .dark\:placeholder-gray-400 {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-gray-400);
+      }
     }
   }
   .dark\:hover\:bg-blue-700 {

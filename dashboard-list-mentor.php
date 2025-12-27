@@ -1,41 +1,3 @@
-<?php
-    session_start();
-    // Matikan error reporting saat production agar tampilan bersih
-    error_reporting(E_ERROR | E_PARSE);
-    date_default_timezone_set("Asia/Kuala_Lumpur");
-    
-    // --- 1. KONEKSI DATABASE ---
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "db_notasi"; // Pastikan nama DB sesuai
-
-    $conn = mysqli_connect($servername, $username, $password, $database); 
-
-    // Cek koneksi
-    if (!$conn) {
-        die("Koneksi gagal: " . mysqli_connect_error());
-    }
-
-    // --- 2. LOGIC PAGINATION & SEARCH ---
-    
-    // Konfigurasi Pagination
-    $limit = 5; // Jumlah baris per halaman
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $start = ($page > 1) ? ($page * $limit) - $limit : 0;
-
-    // Hitung Total Data (Hanya Role Mentor)
-    // Jika nanti mau nambah fitur search, tambahkan WHERE name LIKE '%$keyword%' di sini
-    $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM tb_user WHERE role = 'Mentor'");
-    $rowTotal = mysqli_fetch_assoc($queryTotal);
-    $totalData = $rowTotal['total'];
-    $totalPages = ceil($totalData / $limit);
-
-    // Ambil Data Siswa (Limit sesuai halaman)
-    // ORDER BY id_user DESC agar siswa terbaru muncul paling atas
-    $queryMentors = mysqli_query($conn, "SELECT * FROM tb_user WHERE role = 'Mentor' ORDER BY id_user DESC LIMIT $start, $limit");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,6 +17,19 @@
             scrollbar-width: none;  /* Firefox */
         }
     </style>
+    <?php
+        include "config/koneksi.php";
+
+        $limit = 5; 
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $start = ($page > 1) ? ($page * $limit) - $limit : 0;
+
+        $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM db_notasi.tb_user WHERE role = 'Mentor'");
+        $rowTotal = mysqli_fetch_assoc($queryTotal);
+        $totalData = $rowTotal['total'];
+        $totalPages = ceil($totalData / $limit);
+        $queryMentors = mysqli_query($conn, "SELECT * FROM db_notasi.tb_user WHERE role = 'Mentor' ORDER BY id_user DESC LIMIT $start, $limit");
+    ?>
 </head>
 <body class="dark bg-main-blue font-sans">
     
@@ -134,12 +109,12 @@
                                             // Fallback foto profile
                                             $foto = !empty($row['foto']) ? $row['foto'] : "https://flowbite.com/docs/images/people/profile-picture-5.jpg";
                                             
-                                            // Query Hitung Enrolled
-                                            $qEnroll = mysqli_query($conn, "SELECT COUNT(*) as jml FROM tb_enrollments WHERE id_user = '$idUser'");
+                                            // Query Hitung Draft
+                                            $qEnroll = mysqli_query($conn, "SELECT COUNT(*) as jml FROM db_notasi.tb_courses WHERE id_mentor = '$idUser' AND  `status`='Draft' ");
                                             $jmlEnroll = mysqli_fetch_assoc($qEnroll)['jml'];
 
-                                            // Query Hitung Completed
-                                            $qComplete = mysqli_query($conn, "SELECT COUNT(*) as jml FROM tb_enrollments WHERE id_user = '$idUser' AND is_completed = '1'");
+                                            // Query Hitung Published
+                                            $qComplete = mysqli_query($conn, "SELECT COUNT(*) as jml FROM db_notasi.tb_courses WHERE id_mentor = '$idUser' AND `status`='Published' ");
                                             $jmlComplete = mysqli_fetch_assoc($qComplete)['jml'];
                                 ?>
                                 <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium transition-colors duration-200">
@@ -159,10 +134,10 @@
                                     <td class="px-6 py-4">
                                         <div class="flex flex-col space-y-1">
                                             <span class="text-xs font-medium px-2.5 py-0.5 rounded bg-danger text-gray-300 border border-gray-600 w-fit">
-                                                Enrolled: <?= $jmlEnroll ?>
+                                                Draft: <?= $jmlEnroll ?>
                                             </span>
                                             <span class="text-xs font-medium px-2.5 py-0.5 rounded bg-[#708238]/20 text-[#8FA348] border border-[#708238] w-fit">
-                                                Completed: <?= $jmlComplete ?>
+                                                Published: <?= $jmlComplete ?>
                                             </span>
                                         </div>
                                     </td>

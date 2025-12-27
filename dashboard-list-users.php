@@ -1,41 +1,3 @@
-<?php
-    session_start();
-    // Matikan error reporting saat production agar tampilan bersih
-    error_reporting(E_ERROR | E_PARSE);
-    date_default_timezone_set("Asia/Kuala_Lumpur");
-    
-    // --- 1. KONEKSI DATABASE ---
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "db_notasi"; // Pastikan nama DB sesuai
-
-    $conn = mysqli_connect($servername, $username, $password, $database); 
-
-    // Cek koneksi
-    if (!$conn) {
-        die("Koneksi gagal: " . mysqli_connect_error());
-    }
-
-    // --- 2. LOGIC PAGINATION & SEARCH ---
-    
-    // Konfigurasi Pagination
-    $limit = 5; // Jumlah baris per halaman
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $start = ($page > 1) ? ($page * $limit) - $limit : 0;
-
-    // Hitung Total Data (Hanya Role Student)
-    // Jika nanti mau nambah fitur search, tambahkan WHERE name LIKE '%$keyword%' di sini
-    $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM tb_user WHERE role = 'Student'");
-    $rowTotal = mysqli_fetch_assoc($queryTotal);
-    $totalData = $rowTotal['total'];
-    $totalPages = ceil($totalData / $limit);
-
-    // Ambil Data Siswa (Limit sesuai halaman)
-    // ORDER BY id_user DESC agar siswa terbaru muncul paling atas
-    $queryStudents = mysqli_query($conn, "SELECT * FROM tb_user WHERE role = 'Student' ORDER BY id_user DESC LIMIT $start, $limit");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .no-scrollbar::-webkit-scrollbar {
             display: none;
@@ -55,6 +18,20 @@
             scrollbar-width: none;  /* Firefox */
         }
     </style>
+    <?php
+        include 'config/koneksi.php';
+
+        $limit = 5;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $start = ($page > 1) ? ($page * $limit) - $limit : 0;
+
+        $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM db_notasi.tb_user WHERE role = 'Student'");
+        $rowTotal = mysqli_fetch_assoc($queryTotal);
+        $totalData = $rowTotal['total'];
+        $totalPages = ceil($totalData / $limit);
+
+        $queryStudents = mysqli_query($conn, "SELECT * FROM db_notasi.tb_user WHERE role = 'Student' ORDER BY id_user DESC LIMIT $start, $limit");
+    ?>
 </head>
 <body class="dark bg-main-blue font-sans">
     
@@ -98,21 +75,19 @@
         <div class="p-4">
             <div class="w-full mb-24"> 
                 <div class="relative overflow-hidden w-full bg-neutral-primary-soft shadow-xs rounded-base border border-default">
-                    
                     <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 p-4 border-b border-default-medium">
                         <div class="w-full md:w-auto">
                             <h2 class="text-2xl font-semibold text-heading">Students List</h2>
                             <p class="text-[#708238] font-medium">Active Members</p>
                         </div>
-                        <button type="button" class="inline-flex items-center text-white bg-[#708238] hover:bg-[#006D4C] box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                            <svg class="w-4 h-4 me-1.5 -ms-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
-                            </svg>
-                            Add New Student
-                        </button>
+                        <a href="add-new-user.php">
+                            <button type="button" class="inline-flex items-center text-white bg-[#708238] hover:bg-[#006D4C] box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                                <p><i class="fa-solid fa-plus"></i> Add New User</p>
+                            </button>
+                        </a>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm text-left rtl:text-right text-body">
+                        <table class="w-full text-sm text-left rtl:text-right text-body" id="tableData">
                             <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 font-medium">Name</th>
@@ -131,11 +106,11 @@
                                             $foto = !empty($row['foto']) ? $row['foto'] : "https://flowbite.com/docs/images/people/profile-picture-5.jpg";
                                             
                                             // Query Hitung Enrolled
-                                            $qEnroll = mysqli_query($conn, "SELECT COUNT(*) as jml FROM tb_enrollments WHERE id_user = '$idUser'");
+                                            $qEnroll = mysqli_query($conn, "SELECT COUNT(*) as jml FROM db_notasi.tb_enrollments WHERE id_user = '$idUser'");
                                             $jmlEnroll = mysqli_fetch_assoc($qEnroll)['jml'];
 
                                             // Query Hitung Completed
-                                            $qComplete = mysqli_query($conn, "SELECT COUNT(*) as jml FROM tb_enrollments WHERE id_user = '$idUser' AND is_completed = '1'");
+                                            $qComplete = mysqli_query($conn, "SELECT COUNT(*) as jml FROM db_notasi.tb_enrollments WHERE id_user = '$idUser' AND is_completed = '1'");
                                             $jmlComplete = mysqli_fetch_assoc($qComplete)['jml'];
                                 ?>
                                 <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium transition-colors duration-200">
@@ -163,8 +138,8 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="edit_student.php?id=<?= $idUser ?>" class="font-medium text-[#708238] hover:text-[#8FA348] hover:underline transition-colors">Edit</a> |
-                                        <a href="delete_student.php?id=<?= $idUser ?>" class="font-medium text-fg-danger hover:text-danger hover:underline transition-colors">Delete</a>
+                                        <a href="edit-student.php?id=<?= $idUser ?>" class="font-medium text-[#708238] hover:text-[#8FA348] hover:underline transition-colors">Edit</a> |
+                                        <button id="btnDel" data-id=<?= $idUser ?> class="font-medium text-fg-danger hover:text-danger hover:underline transition-colors">Delete</button>
                                     </td>
                                 </tr>
                                 <?php 
@@ -247,5 +222,38 @@
         </div>
     </div>
     <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        var tableData=$('#tableData');
+
+        tableData.on("click","#btnDel",function(){
+    	var validasi=confirm("Are you sure you want to delete this user?");
+    	if(validasi){
+	    	var btn=$(this);
+	    	var id_user=$(this).attr("data-id");
+	    	// alert(id_user);
+	    	var promise=$.ajax({
+	    		url  : 'proses/prosesQuery.php',
+	    		type : 'POST',
+	    		dataType: 'json',
+	    		cache   : false,
+	    		data    : {
+	    			flag  : "prosesHapusUser",
+	    			id_user : id_user
+	    		},
+	    		success: function(data){
+                    if(data.success == "sukses"){
+                        alert("Successfully deleted data!");
+                        location.reload(); 
+                    } else {
+                        alert("Failed to delete data.");
+                    }
+                }
+	    	});
+	    }else{
+	    	alert("Be careful!");
+	    }
+    });
+    </script>
 </body>
 </html>
