@@ -138,7 +138,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="edit-student.php?id=<?= $idUser ?>" class="font-medium text-[#708238] hover:text-[#8FA348] hover:underline transition-colors">Edit</a> |
+                                        <a href="edit-user.php?id_user=<?= $idUser ?>" class="font-medium text-[#708238] hover:text-[#8FA348] hover:underline transition-colors">Edit</a> |
                                         <button id="btnDel" data-id=<?= $idUser ?> class="font-medium text-fg-danger hover:text-danger hover:underline transition-colors">Delete</button>
                                     </td>
                                 </tr>
