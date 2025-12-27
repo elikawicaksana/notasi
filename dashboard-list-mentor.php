@@ -91,7 +91,7 @@
                     </div>
 
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm text-left rtl:text-right text-body">
+                        <table class="w-full text-sm text-left rtl:text-right text-body" id="tableData">
                             <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 font-medium">Name</th>
@@ -142,8 +142,8 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="edit_Mentor.php?id=<?= $idUser ?>" class="font-medium text-[#708238] hover:text-[#8FA348] hover:underline transition-colors">Edit</a> |
-                                        <a href="delete_Mentor.php?id=<?= $idUser ?>" class="font-medium text-fg-danger hover:text-danger hover:underline transition-colors">Delete</a>
+                                        <a href="edit-user.php?id_user=<?= $idUser ?>" class="font-medium text-[#708238] hover:text-[#8FA348] hover:underline transition-colors">Edit</a> |
+                                        <button id="btnDel" data-id=<?= $idUser ?> class="font-medium text-fg-danger hover:text-danger hover:underline transition-colors">Delete</button>
                                     </td>
                                 </tr>
                                 <?php 
@@ -226,5 +226,37 @@
         </div>
     </div>
     <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        var tableData=$('#tableData');
+        tableData.on("click","#btnDel",function(){
+    	var validasi=confirm("Are you sure you want to delete this user?");
+    	if(validasi){
+	    	var btn=$(this);
+	    	var id_user=$(this).attr("data-id");
+	    	// alert(id_user);
+	    	var promise=$.ajax({
+	    		url  : 'proses/prosesQuery.php',
+	    		type : 'POST',
+	    		dataType: 'json',
+	    		cache   : false,
+	    		data    : {
+	    			flag  : "prosesHapusUser",
+	    			id_user : id_user
+	    		},
+	    		success: function(data){
+                    if(data.success == "sukses"){
+                        alert("Successfully deleted data!");
+                        location.reload(); 
+                    } else {
+                        alert("Failed to delete data.");
+                    }
+                }
+	    	});
+	    }else{
+	    	alert("Be careful!");
+	    }
+    });
+    </script>
 </body>
 </html>
