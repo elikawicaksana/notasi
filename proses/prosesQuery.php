@@ -115,5 +115,110 @@
         }
         
         echo json_encode($data);
+    } elseif ($flag == "prosesTambahCourse") {
+
+        // 1. Enable Error Reporting
+        mysqli_report(MYSQLI_REPORT_OFF);
+        
+        if (empty($_POST)) {
+            die("Error: No data received. Check PHP post_max_size.");
+        }
+
+        // 2. Session Check
+        if (!isset($_SESSION['id_user'])) {
+            die("Error: Session expired. Please login again.");
+        }
+
+        $id_mentor = $_SESSION['id_user'];
+        $title     = mysqli_real_escape_string($conn, $_POST['title']);
+        $category  = mysqli_real_escape_string($conn, $_POST['category']);
+        $status    = mysqli_real_escape_string($conn, $_POST['status']);
+        $desc      = mysqli_real_escape_string($conn, $_POST['desc']); 
+
+        // 3. Image Upload
+        $db_thumbnail_path = "";
+        $server_upload_path = "";
+        
+        if (isset($_FILES['thumbnail']['tmp_name']) && $_FILES['thumbnail']['tmp_name'] != "") {
+            $file_tmp    = $_FILES['thumbnail']['tmp_name'];
+            $file_name   = $_FILES['thumbnail']['name'];
+            $file_ext    = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+            $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+            if (in_array($file_ext, $allowed_ext)) {
+                $clean_filename = date('Ymd-His') . '-' . uniqid() . '.' . $file_ext;
+                $server_upload_path = '../dist/img/' . $clean_filename;
+                $db_thumbnail_path  = 'dist/img/' . $clean_filename;
+
+                if (!is_dir($upload_dir)) {
+                    mkdir($upload_dir, 0777, true);
+                }
+
+                if (!move_uploaded_file($file_tmp, $server_upload_path)) {
+                    die("Error: Failed to move file to $server_upload_path");
+                }
+            } else {
+                die("Error: Invalid file format.");
+            }
+        }
+
+        // 4. Transaction
+        mysqli_begin_transaction($conn);
+
+        try {
+            // A. Insert Course
+            $sqlCourse = "INSERT INTO db_notasi.tb_courses (title, id_mentor, thumbnail, category, `desc`, `status`, created_at) 
+                          VALUES ('$title', '$id_mentor', '$db_thumbnail_path', '$category', '$desc', '$status', CURRENT_TIMESTAMP())";
+            
+            if (!mysqli_query($conn, $sqlCourse)) {
+                throw new Exception("Error saving course: " . mysqli_error($conn));
+            }
+
+            $new_course_id = mysqli_insert_id($conn);
+
+            // B. Insert Modules (Now with ORDER)
+            if (isset($_POST['modules']) && is_array($_POST['modules'])) {
+                
+                // $index starts at 0, so we use it to calculate order
+                foreach ($_POST['modules'] as $index => $module) {
+                    
+                    $modTitle   = mysqli_real_escape_string($conn, $module['title']);
+                    $modLink    = mysqli_real_escape_string($conn, $module['link']);
+                    $modContent = mysqli_real_escape_string($conn, $module['content']);
+                    
+                    // Determine Order (Index + 1)
+                    $orderVal = $index + 1;
+
+                    // Note: `order` is a reserved word, must use backticks ``
+                    $sqlModule = "INSERT INTO db_notasi.tb_modules (id_course, title, content_url, content_body, `order`) 
+                                  VALUES ('$new_course_id', '$modTitle', '$modLink', '$modContent', '$orderVal')";
+
+                    if (!mysqli_query($conn, $sqlModule)) {
+                        throw new Exception("Error saving module #$orderVal: " . mysqli_error($conn));
+                    }
+                }
+            }
+
+            mysqli_commit($conn);
+            
+            echo "<script>
+                    alert('Course and Modules successfully saved!'); 
+                    window.location = ('../mentor-add-course.php'); 
+                  </script>";
+
+        } catch (Exception $e) {
+            mysqli_rollback($conn);
+            
+            if (!empty($thumbnail_path) && file_exists('../dist/img/' . $thumbnail_path)) {
+                unlink('../dist/img/' . $thumbnail_path);
+            }
+
+            // Safe Error Output
+            $safeError = json_encode($e->getMessage());
+            echo "<script>
+                    alert('Transaction Failed: ' + $safeError); 
+                    window.history.back();
+                  </script>";
+        }
     }
 ?>
