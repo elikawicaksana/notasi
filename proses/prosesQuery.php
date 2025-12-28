@@ -1,6 +1,5 @@
 <?php
     include '../config/koneksi.php';
-    session_start();
 
     $flag=$_POST['flag'];
 
@@ -73,5 +72,48 @@
             echo "window.location = ('../edit-user.php?id_user=".$_POST['id_user']."');";
             echo "</script>";
         }
+    }elseif($flag=="prosesHapusCourse"){
+        $id_course = $_POST['id_course'];
+        $id_mentor = $_SESSION['id_user'];
+
+        $checkOwner = mysqli_query($conn, "SELECT id_mentor FROM db_notasi.tb_courses WHERE id_course='".$id_course."'");
+        $owner = mysqli_fetch_assoc($checkOwner);
+        
+        if($owner && $owner['id_mentor'] == $id_mentor) {
+            mysqli_begin_transaction($conn);
+            
+            try {
+                $delCertificates = mysqli_query($conn, "DELETE FROM db_notasi.tb_certificates WHERE id_course='".$id_course."'");
+                if(!$delCertificates) throw new Exception("Failed to delete certificates");
+
+                $delModuleCompletions = mysqli_query($conn, "DELETE db_notasi.tb_module_completions FROM db_notasi.tb_module_completions 
+                                                            INNER JOIN db_notasi.tb_enrollments ON db_notasi.tb_module_completions.id_enroll = db_notasi.tb_enrollments.id_enroll 
+                                                            WHERE db_notasi.tb_enrollments.id_course='".$id_course."'");
+                if(!$delModuleCompletions) throw new Exception("Failed to delete module completions");
+
+                $delEnrollments = mysqli_query($conn, "DELETE FROM db_notasi.tb_enrollments WHERE id_course='".$id_course."'");
+                if(!$delEnrollments) throw new Exception("Failed to delete enrollments");
+
+                $delModules = mysqli_query($conn, "DELETE FROM db_notasi.tb_modules WHERE id_course='".$id_course."'");
+                if(!$delModules) throw new Exception("Failed to delete modules");
+
+                $delCourse = mysqli_query($conn, "DELETE FROM db_notasi.tb_courses WHERE id_course='".$id_course."'");
+                if(!$delCourse) throw new Exception("Failed to delete course");
+
+                mysqli_commit($conn);
+                $data['success'] = "sukses";
+                $data['message'] = "Course and all related data deleted successfully";
+                
+            } catch (Exception $e) {
+                mysqli_rollback($conn);
+                $data['success'] = "gagal";
+                $data['message'] = $e->getMessage();
+            }
+        } else {
+            $data['success'] = "unauthorized";
+            $data['message'] = "You don't have permission to delete this course";
+        }
+        
+        echo json_encode($data);
     }
 ?>

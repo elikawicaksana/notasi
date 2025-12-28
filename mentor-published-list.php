@@ -24,7 +24,13 @@
             header("Location: login.php");
             exit;
         }
-        $id_mentor = $_SESSION['id_user']; 
+        $id_mentor = $_SESSION['id_user'];
+
+        // Count total published courses for this mentor
+        $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM db_notasi.tb_courses WHERE id_mentor = '$id_mentor' AND `status`= 'Published'");
+        $rowTotal = mysqli_fetch_assoc($queryTotal);
+        $totalData = $rowTotal['total'];
+        $totalPages = ceil($totalData / $limit);
 
         $sql = "SELECT 
                     c.*, 
@@ -109,6 +115,75 @@
                                 </div>
                             <?php } ?>
                         </div>
+                        <!-- Pagination Controls -->
+                        <?php if($totalPages > 1): ?>
+                            <nav class="flex flex-col md:flex-row justify-between items-center mt-8 space-y-3 md:space-y-0" aria-label="Course pagination">
+                                
+                                <!-- Showing info -->
+                                <span class="text-sm font-normal text-gray-400">
+                                    Showing <span class="font-semibold text-white"><?= ($totalData > 0) ? $start + 1 : 0 ?></span> 
+                                    to <span class="font-semibold text-white"><?= min($start + $limit, $totalData) ?></span> 
+                                    of <span class="font-semibold text-white"><?= $totalData ?></span> courses
+                                </span>
+                                
+                                <!-- Page buttons -->
+                                <ul class="inline-flex items-center gap-2 text-sm h-8">
+                                    
+                                    <!-- Previous Button -->
+                                    <li>
+                                        <?php if($page > 1): ?>
+                                            <a href="?page=<?= $page - 1 ?>" class="flex items-center justify-center px-3 h-9 leading-tight text-gray-400 bg-transparent border border-gray-600 rounded-lg hover:bg-gray-700 hover:text-white transition-all">
+                                                <span class="sr-only">Previous</span>
+                                                <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                                                </svg>
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="flex items-center justify-center px-3 h-9 leading-tight text-gray-600 bg-transparent border border-gray-800 rounded-lg cursor-not-allowed opacity-50">
+                                                <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                                                </svg>
+                                            </span>
+                                        <?php endif; ?>
+                                    </li>
+
+                                    <!-- Page Numbers -->
+                                    <?php for($i = 1; $i <= $totalPages; $i++): ?>
+                                        <li>
+                                            <?php if($i == $page): ?>
+                                                <span class="flex items-center justify-center px-3 h-9 text-white bg-gradient-to-br from-[#708238] to-[#506028] border border-[#708238] rounded-lg shadow-[0_4px_10px_rgba(112,130,56,0.4)] font-bold transform scale-105">
+                                                    <?= $i ?>
+                                                </span>
+                                            <?php else: ?>
+                                                <a href="?page=<?= $i ?>" class="flex items-center justify-center px-3 h-9 leading-tight text-gray-400 bg-transparent border border-gray-600 rounded-lg hover:bg-gray-700 hover:text-white hover:border-gray-500 transition-all">
+                                                    <?= $i ?>
+                                                </a>
+                                            <?php endif; ?>
+                                        </li>
+                                    <?php endfor; ?>
+
+                                    <!-- Next Button -->
+                                    <li>
+                                        <?php if($page < $totalPages): ?>
+                                            <a href="?page=<?= $page + 1 ?>" class="flex items-center justify-center px-3 h-9 leading-tight text-gray-400 bg-transparent border border-gray-600 rounded-lg hover:bg-gray-700 hover:text-white transition-all">
+                                                <span class="sr-only">Next</span>
+                                                <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                                </svg>
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="flex items-center justify-center px-3 h-9 leading-tight text-gray-600 bg-transparent border border-gray-800 rounded-lg cursor-not-allowed opacity-50">
+                                                <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                                </svg>
+                                            </span>
+                                        <?php endif; ?>
+                                    </li>
+
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
+                        
                     <?php 
                     } else {
                         echo '<div class="text-center p-10 text-gray-500 bg-[#111827] rounded-lg">You haven\'t published any courses yet.</div>';
@@ -122,34 +197,34 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         var container = $('#courseContainer');
-
         container.on("click", ".btnDel", function(){
-            var validasi = confirm("Are you sure you want to delete this course?");
+            var validasi = confirm("WARNING: This will permanently delete the course and ALL related data including:\n\n• All course modules\n• All student enrollments\n• All student progress\n• All certificates\n\nThis action CANNOT be undone!\n\nAre you sure you want to continue?");
             if(validasi){
                 var btn = $(this);
-                var id_course = $(this).attr("data-id");
-                
-                // UNCOMMENT AND ADJUST THE AJAX BELOW WHEN READY
-                /*
+                var id_course = $(this).attr("data-id");            
                 $.ajax({
-                   url  : 'proses/prosesQuery.php',
-                   type : 'POST',
-                   dataType: 'json',
-                   data    : {
-                       flag  : "prosesHapusCourse",
-                       id_course : id_course
-                   },
-                   success: function(data){
-                       if(data.success == "sukses"){
-                           alert("Successfully deleted data!");
-                           location.reload(); 
-                       } else {
-                           alert("Failed to delete data.");
-                       }
-                   }
+                    url  : 'proses/prosesQuery.php',
+                    type : 'POST',
+                    dataType: 'json',
+                    cache   : false,
+                    data    : {
+                        flag  : "prosesHapusCourse",
+                        id_course : id_course
+                    },
+                    success: function(data){
+                        if(data.success == "sukses"){
+                            alert(data.message);
+                            location.reload(); 
+                        } else if(data.success == "unauthorized"){
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function(xhr, status, error){
+                        alert("An error occurred: " + error);
+                    }
                 });
-                */
-               alert("Delete functionality ready for ID: " + id_course);
             }
         });
     </script>
