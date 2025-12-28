@@ -26,8 +26,8 @@
         }
         $id_mentor = $_SESSION['id_user'];
 
-        // Count total published courses for this mentor
-        $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM db_notasi.tb_courses WHERE id_mentor = '$id_mentor' AND `status`= 'Published'");
+        // Count total Draft courses for this mentor
+        $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM db_notasi.tb_courses WHERE id_mentor = '$id_mentor' AND `status`= 'Draft'");
         $rowTotal = mysqli_fetch_assoc($queryTotal);
         $totalData = $rowTotal['total'];
         $totalPages = ceil($totalData / $limit);
@@ -39,7 +39,7 @@
                     (SELECT COUNT(*) FROM db_notasi.tb_enrollments e WHERE e.id_course = c.id_course) AS total_enrolled
                 FROM db_notasi.tb_courses c
                 JOIN db_notasi.tb_user u ON c.id_mentor = u.id_user
-                WHERE c.id_mentor = '$id_mentor' AND c.`status`= 'Published'
+                WHERE c.id_mentor = '$id_mentor' AND c.`status`= 'Draft'
                 ORDER BY c.id_course DESC 
                 LIMIT $start, $limit";
 
@@ -56,7 +56,7 @@
             <div class="w-full mb-24"> 
                <div class="w-full mb-24">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold text-white">Published Post</h2>
+                        <h2 class="text-2xl font-bold text-white">Draft Post</h2>
                     </div>
                     <?php
                     if (mysqli_num_rows($queryCourses) > 0) {
@@ -96,11 +96,7 @@
                                                     <span class="text-xs text-gray-500 ml-1">Students</span>
                                                 </div>
                                             </div>
-                                            <div class="grid grid-cols-3 gap-2">
-                                                <a href="course-detail.php?id=<?php echo $row['id_course']; ?>" 
-                                                class="flex items-center justify-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition text-sm font-medium">
-                                                    <i class="fa-solid fa-eye mr-1"></i> View
-                                                </a>
+                                            <div class="grid grid-cols-2 gap-2">
                                                 <a href="edit-course.php?id_course=<?php echo $row['id_course']; ?>" 
                                                 class="flex items-center justify-center px-3 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-md transition text-sm font-bold">
                                                     <i class="fa-solid fa-pen-to-square mr-1"></i> Edit
@@ -186,7 +182,7 @@
                         
                     <?php 
                     } else {
-                        echo '<div class="text-center p-10 text-gray-500 bg-[#111827] rounded-lg">You haven\'t published any courses yet.</div>';
+                        echo '<div class="text-center p-10 text-gray-500 bg-[#111827] rounded-lg">You don\'t have any draft yet.</div>';
                     } 
                     ?>
                 </div>

@@ -220,5 +220,89 @@
                     window.history.back();
                   </script>";
         }
+    }elseif ($flag == "prosesEditCourse") {
+        mysqli_report(MYSQLI_REPORT_OFF);
+
+        if (empty($_POST)) die("Error: No data.");
+        if (!isset($_SESSION['id_user'])) die("Error: Session expired.");
+
+        $id_mentor = $_SESSION['id_user'];
+        $id_course = $_POST['id_course'];
+        $title     = mysqli_real_escape_string($conn, $_POST['title']);
+        $category  = mysqli_real_escape_string($conn, $_POST['category']);
+        $status    = mysqli_real_escape_string($conn, $_POST['status']);
+        $desc      = mysqli_real_escape_string($conn, $_POST['desc']); 
+        $old_thumb = $_POST['old_thumbnail'];
+
+        // Ownership Check
+        $check = mysqli_query($conn, "SELECT id_mentor FROM db_notasi.tb_courses WHERE id_course='$id_course'");
+        $owner = mysqli_fetch_assoc($check);
+        if (!$owner || $owner['id_mentor'] != $id_mentor) die("Error: Unauthorized.");
+
+        // Image Logic
+        $db_thumbnail_path = $old_thumb;
+        $server_upload_path = "";
+
+        if (isset($_FILES['thumbnail']['tmp_name']) && $_FILES['thumbnail']['tmp_name'] != "") {
+            $file_ext = strtolower(pathinfo($_FILES['thumbnail']['name'], PATHINFO_EXTENSION));
+            if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                $clean_filename = date('Ymd-His') . '-' . uniqid() . '.' . $file_ext;
+                
+                $upload_dir = '../dist/img/'; // DEFINED HERE
+                $server_upload_path = $upload_dir . $clean_filename;
+                $db_thumbnail_path  = 'dist/img/' . $clean_filename;
+
+                if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+                
+                if (!move_uploaded_file($_FILES['thumbnail']['tmp_name'], $server_upload_path)) {
+                    die("Error: Failed to upload image.");
+                }
+            } else {
+                die("Error: Invalid format.");
+            }
+        }
+
+        mysqli_begin_transaction($conn);
+        try {
+            // Update Course - REMOVED 'updated_at' because your DB doesn't have it
+            $sqlCourse = "UPDATE db_notasi.tb_courses 
+                          SET title='$title', category='$category', `desc`='$desc', `status`='$status', thumbnail='$db_thumbnail_path'
+                          WHERE id_course='$id_course'";
+            
+            if (!mysqli_query($conn, $sqlCourse)) throw new Exception(mysqli_error($conn));
+
+            // Sync Modules: Delete Old -> Insert New
+            if (!mysqli_query($conn, "DELETE FROM db_notasi.tb_modules WHERE id_course='$id_course'")) {
+                throw new Exception(mysqli_error($conn));
+            }
+
+            if (isset($_POST['modules']) && is_array($_POST['modules'])) {
+                foreach ($_POST['modules'] as $index => $module) {
+                    $mTitle   = mysqli_real_escape_string($conn, $module['title']);
+                    $mLink    = mysqli_real_escape_string($conn, $module['link']);
+                    $mContent = mysqli_real_escape_string($conn, $module['content']);
+                    $order    = $index + 1;
+
+                    $sqlMod = "INSERT INTO db_notasi.tb_modules (id_course, title, content_url, content_body, `order`) 
+                               VALUES ('$id_course', '$mTitle', '$mLink', '$mContent', '$order')";
+                    
+                    if (!mysqli_query($conn, $sqlMod)) throw new Exception(mysqli_error($conn));
+                }
+            }
+
+            mysqli_commit($conn);
+            
+            // Cleanup old image if replaced
+            if ($server_upload_path != "" && $old_thumb != "" && file_exists('../' . $old_thumb) && strpos($old_thumb, 'default') === false) {
+                unlink('../' . $old_thumb);
+            }
+
+            echo "<script>alert('Course updated!'); window.location='../mentor-published-list.php';</script>";
+
+        } catch (Exception $e) {
+            mysqli_rollback($conn);
+            if (!empty($server_upload_path) && file_exists($server_upload_path)) unlink($server_upload_path);
+            echo "<script>alert('Update Failed: " . addslashes($e->getMessage()) . "'); window.history.back();</script>";
+        }
     }
 ?>
