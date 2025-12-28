@@ -22,7 +22,13 @@
             $_SESSION['email']=$fetch['email'];
             $_SESSION['role']=$fetch['role'];
 
-            header('location:../dashboard.php');
+            if($_SESSION['role']=='Admin'){
+                header('location:../dashboard.php');
+            }else if($_SESSION['role']=='Mentor'){
+                header('location:../dashboard-mentor.php');
+            }else{
+                header('location:../dashboard-student.php');
+            }
         }else{
             echo "<script type='text/javascript'>\n";
             echo "alert('Wrong username!');";

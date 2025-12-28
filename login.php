@@ -28,10 +28,22 @@
     <?php
         session_start();
         if(isset($_SESSION['username']) && isset($_SESSION['passwd'])){
-            echo "<script type='text/javascript'>\n";
-            echo "alert('You already login!');";
-            echo "window.location = ('dashboard.php');";
-            echo "</script>";
+            if($_SESSION['role']=='Admin'){
+                echo "<script type='text/javascript'>\n";
+                echo "alert('You already login!');";
+                echo "window.location = ('dashboard.php');";
+                echo "</script>";
+            }else if($_SESSION['role']=='Mentor'){
+                echo "<script type='text/javascript'>\n";
+                echo "alert('You already login!');";
+                echo "window.location = ('dashboard-mentor.php');";
+                echo "</script>";
+            }else{
+                echo "<script type='text/javascript'>\n";
+                echo "alert('You already login!');";
+                echo "window.location = ('dashboard-student.php');";
+                echo "</script>";
+            }
         }
     ?>
 </head>
