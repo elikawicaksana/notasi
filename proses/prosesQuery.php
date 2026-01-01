@@ -304,5 +304,138 @@
             if (!empty($server_upload_path) && file_exists($server_upload_path)) unlink($server_upload_path);
             echo "<script>alert('Update Failed: " . addslashes($e->getMessage()) . "'); window.history.back();</script>";
         }
+    }elseif ($flag == "prosesEnroll") {
+        if (!isset($_SESSION['id_user'])) {
+            echo "<script>alert('Please login first!'); window.location='../login.php';</script>";
+            exit;
+        }
+
+        $id_user = $_SESSION['id_user'];
+        $id_course = $_POST['id_course'];
+
+        $checkQuery = mysqli_query($conn, "SELECT id_enroll FROM db_notasi.tb_enrollments WHERE id_user='$id_user' AND id_course='$id_course'");
+        
+        if (mysqli_num_rows($checkQuery) > 0) {
+            echo "<script>window.location = ('../course-learning.php?id_course=$id_course');</script>";
+            exit;
+        }
+
+        $queryEnroll = "INSERT INTO db_notasi.tb_enrollments (id_user, id_course, progress_percentage, is_completed, enrolled_at) 
+                        VALUES ('$id_user', '$id_course', 0, 0, CURRENT_TIMESTAMP())";
+
+        if (mysqli_query($conn, $queryEnroll)) {
+            echo "<script>
+                    alert('Enrollment Successful! Welcome to the class.'); 
+                    window.location = ('../course-learning.php?id_course=$id_course'); 
+                  </script>";
+        } else {
+            echo "<script>
+                    alert('Failed to enroll: " . mysqli_error($conn) . "'); 
+                    window.history.back();
+                  </script>";
+        }
+    }elseif ($flag == "updateProgress") {
+        
+        header('Content-Type: application/json');
+
+        if (!isset($_SESSION['id_user'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Session expired']);
+            exit;
+        }
+
+        $id_enroll = $_POST['id_enroll'];
+        $id_module = $_POST['id_module'];
+        $action    = $_POST['action']; 
+
+        $is_completed_val = ($action == 'check') ? 1 : 0;
+
+        mysqli_begin_transaction($conn);
+        try {
+            $check = mysqli_query($conn, "SELECT id_completion FROM db_notasi.tb_module_completions WHERE id_enroll='$id_enroll' AND id_module='$id_module'");
+            
+            if (mysqli_num_rows($check) > 0) {
+                $update = mysqli_query($conn, "UPDATE db_notasi.tb_module_completions SET is_completed='$is_completed_val' WHERE id_enroll='$id_enroll' AND id_module='$id_module'");
+                if (!$update) throw new Exception("Failed to update completion status.");
+            } else {
+                $insert = mysqli_query($conn, "INSERT INTO db_notasi.tb_module_completions (id_enroll, id_module, is_completed) VALUES ('$id_enroll', '$id_module', '$is_completed_val')");
+                if (!$insert) throw new Exception("Failed to insert completion status.");
+            }
+
+            $qEnroll = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id_course FROM db_notasi.tb_enrollments WHERE id_enroll='$id_enroll'"));
+            $id_course = $qEnroll['id_course'];
+
+            $qTotal = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM db_notasi.tb_modules WHERE id_course='$id_course'"));
+
+            $qDone  = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as done FROM db_notasi.tb_module_completions WHERE id_enroll='$id_enroll' AND is_completed=1"));
+            
+            $total_modules = $qTotal['total'];
+            $completed_modules = $qDone['done'];
+
+            $percentage = ($total_modules > 0) ? round(($completed_modules / $total_modules) * 100) : 0;
+
+            $updateEnroll = mysqli_query($conn, "UPDATE db_notasi.tb_enrollments SET progress_percentage='$percentage' WHERE id_enroll='$id_enroll'");
+            if (!$updateEnroll) throw new Exception("Failed to update progress percentage.");
+
+            mysqli_commit($conn);
+            echo json_encode(['status' => 'success', 'new_percentage' => $percentage]);
+
+        } catch (Exception $e) {
+            mysqli_rollback($conn);
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }elseif ($flag == "finishCourse") {
+        header('Content-Type: application/json');
+
+        if (!isset($_SESSION['id_user'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Session expired']);
+            exit;
+        }
+
+        $id_enroll = $_POST['id_enroll'];
+
+        mysqli_begin_transaction($conn);
+        try {
+            // 1. Verify Progress (Security Check)
+            $check = mysqli_query($conn, "SELECT * FROM db_notasi.tb_enrollments WHERE id_enroll='$id_enroll'");
+            $enrollData = mysqli_fetch_assoc($check);
+
+            if (!$enrollData) throw new Exception("Enrollment not found.");
+            
+            // Allow if 100% OR if already marked completed (to re-download cert)
+            if ($enrollData['progress_percentage'] == 100) {
+                
+                // 2. Mark Enrollment as Completed
+                $updateEnroll = mysqli_query($conn, "UPDATE db_notasi.tb_enrollments SET is_completed = 1, completed_at = CURRENT_TIMESTAMP() WHERE id_enroll='$id_enroll'");
+                if (!$updateEnroll) throw new Exception("Failed to update enrollment status.");
+
+                // 3. Generate & Insert Certificate
+                $id_user = $enrollData['id_user'];
+                $id_course = $enrollData['id_course'];
+
+                // Check if certificate already exists to prevent duplicates
+                $checkCert = mysqli_query($conn, "SELECT id_certificate FROM db_notasi.tb_certificates WHERE id_user='$id_user' AND id_course='$id_course'");
+                
+                if (mysqli_num_rows($checkCert) == 0) {
+                    // Generate a Unique Code (e.g., NOTASI-20231025-A1B2C3D4)
+                    $uniqueStr = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 8));
+                    $certCode = "NOTASI-" . date("Ymd") . "-" . $uniqueStr;
+
+                    $queryCert = "INSERT INTO db_notasi.tb_certificates (id_user, id_course, certificate_code, issued_at) 
+                                  VALUES ('$id_user', '$id_course', '$certCode', CURRENT_TIMESTAMP())";
+                    
+                    $insertCert = mysqli_query($conn, $queryCert);
+                    if (!$insertCert) throw new Exception("Failed to generate certificate.");
+                }
+
+                mysqli_commit($conn);
+                echo json_encode(['status' => 'success']); 
+            } else {
+                echo json_encode(['status' => 'incomplete', 'message' => 'Please complete all modules (100%) before finishing.']);
+            }
+
+        } catch (Exception $e) {
+            mysqli_rollback($conn);
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 ?>
