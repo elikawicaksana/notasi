@@ -15,15 +15,24 @@
     </style>
     <?php
         include 'config/koneksi.php';
+        
+        if (!isset($_SESSION['id_user'])) {
+            echo "<script type='text/javascript'>\n";
+            echo "alert('Please login first!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
+            if($_SESSION['role']!='Mentor'){
+                echo "<script type='text/javascript'>\n";
+                echo "alert('You are not a mentor!');";
+                echo "window.location = ('index.php');";
+                echo "</script>";
+            }
+        }
 
         $limit = 4;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $start = ($page > 1) ? ($page * $limit) - $limit : 0;
-
-        if (!isset($_SESSION['id_user'])) {
-            header("Location: login.php");
-            exit;
-        }
+        
         $id_mentor = $_SESSION['id_user'];
 
         // Count total Draft courses for this mentor

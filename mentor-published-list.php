@@ -15,15 +15,24 @@
     </style>
     <?php
         include 'config/koneksi.php';
+        
+        if (!isset($_SESSION['id_user'])) {
+            echo "<script type='text/javascript'>\n";
+            echo "alert('Please login first!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
+            if($_SESSION['role']!='Mentor'){
+                echo "<script type='text/javascript'>\n";
+                echo "alert('You are not a mentor!');";
+                echo "window.location = ('index.php');";
+                echo "</script>";
+            }
+        }
 
         $limit = 4;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $start = ($page > 1) ? ($page * $limit) - $limit : 0;
 
-        if (!isset($_SESSION['id_user'])) {
-            header("Location: login.php");
-            exit;
-        }
         $id_mentor = $_SESSION['id_user'];
 
         // Count total published courses for this mentor
@@ -97,8 +106,7 @@
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-3 gap-2">
-                                                <a href="course-detail.php?id=<?php echo $row['id_course']; ?>" 
-                                                class="flex items-center justify-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition text-sm font-medium">
+                                                <a href="course-detail.php?id_course=<?php echo $row['id_course']; ?>" target="_blank" class="flex items-center justify-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition text-sm font-medium">
                                                     <i class="fa-solid fa-eye mr-1"></i> View
                                                 </a>
                                                 <a href="edit-course.php?id_course=<?php echo $row['id_course']; ?>" 

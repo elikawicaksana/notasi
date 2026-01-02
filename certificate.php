@@ -50,9 +50,9 @@
 <body class="bg-[#111827] min-h-screen flex flex-col items-center py-10">
 
     <div class="w-full max-w-4xl flex justify-between items-center mb-8 px-4">
-        <a href="dashboard-student.php" class="text-gray-400 hover:text-white flex items-center gap-2 transition-colors">
+        <a href="course.php" class="text-gray-400 hover:text-white flex items-center gap-2 transition-colors">
             <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center"><i class="fa-solid fa-arrow-left text-xs"></i></div>
-            Back to Dashboard
+            Back to Courses
         </a>
         <button id="downloadBtn" class="bg-[#006D4C] hover:bg-[#005a3e] text-white px-6 py-2.5 rounded-lg font-bold shadow-lg flex items-center gap-2 transition-transform transform active:scale-95">
             <i class="fa-solid fa-file-pdf"></i> Download Certificate PDF
