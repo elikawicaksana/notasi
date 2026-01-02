@@ -17,13 +17,17 @@
         include 'config/koneksi.php';
         
         if (!isset($_SESSION['id_user'])) {
-            echo "<script>alert('Please login first!'); window.location = ('index.php');</script>";
-            exit;
+            echo "<script type='text/javascript'>\n";
+            echo "alert('Please login first!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
         }
 
-        if($_SESSION['role'] != 'Student'){
-            echo "<script>alert('You are not authorized!'); window.location = ('dashboard.php');</script>";
-            exit;
+        if($_SESSION['role']!='Student'){
+            echo "<script type='text/javascript'>\n";
+            echo "alert('You are not a Student!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
         }
 
         $id_user = $_SESSION['id_user'];
