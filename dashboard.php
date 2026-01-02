@@ -21,6 +21,19 @@
     <?php
         include 'config/koneksi.php';
 
+        if (!isset($_SESSION['id_user'])) {
+            echo "<script type='text/javascript'>\n";
+            echo "alert('Please login first!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
+            if($_SESSION['role']!='Admin'){
+                echo "<script type='text/javascript'>\n";
+                echo "alert('You are not an admin!');";
+                echo "window.location = ('index.php');";
+                echo "</script>";
+            }
+        }
+
         $limit = 5;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $start = ($page > 1) ? ($page * $limit) - $limit : 0;

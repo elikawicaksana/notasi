@@ -21,6 +21,19 @@
     <?php
         include 'config/koneksi.php';
 
+        if (!isset($_SESSION['id_user'])) {
+            echo "<script type='text/javascript'>\n";
+            echo "alert('Please login first!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
+            if($_SESSION['role']!='Admin'){
+                echo "<script type='text/javascript'>\n";
+                echo "alert('You are not an admin!');";
+                echo "window.location = ('index.php');";
+                echo "</script>";
+            }
+        }
+
         $queryUser=mysqli_query($conn,"SELECT * FROM db_notasi.tb_user 
                                       WHERE id_user='".$_GET['id_user']."'
                                      ") OR die(mysqli_error($conn)); 

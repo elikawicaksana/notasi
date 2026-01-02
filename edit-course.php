@@ -16,9 +16,17 @@
     <?php
         include 'config/koneksi.php';
         
-        if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'Mentor') {
-            header("Location: login.php");
-            exit;
+        if (!isset($_SESSION['id_user'])) {
+            echo "<script type='text/javascript'>\n";
+            echo "alert('Please login first!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
+            if($_SESSION['role']!='Mentor'){
+                echo "<script type='text/javascript'>\n";
+                echo "alert('You are not a Mentor!');";
+                echo "window.location = ('index.php');";
+                echo "</script>";
+            }
         }
 
         $id_course = $_GET['id_course'];
