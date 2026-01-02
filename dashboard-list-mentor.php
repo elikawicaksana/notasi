@@ -25,12 +25,13 @@
             echo "alert('Please login first!');";
             echo "window.location = ('index.php');";
             echo "</script>";
-            if($_SESSION['role']!='Admin'){
-                echo "<script type='text/javascript'>\n";
-                echo "alert('You are not an admin!');";
-                echo "window.location = ('index.php');";
-                echo "</script>";
-            }
+        }
+
+        if($_SESSION['role']!='Admin'){
+            echo "<script type='text/javascript'>\n";
+            echo "alert('You are not an admin!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
         }
 
         $limit = 5; 

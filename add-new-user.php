@@ -20,6 +20,20 @@
     </style>
     <?php
         include 'config/koneksi.php';
+
+        if (!isset($_SESSION['id_user'])) {
+            echo "<script type='text/javascript'>\n";
+            echo "alert('Please login first!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
+        }
+
+        if($_SESSION['role']!='Admin'){
+            echo "<script type='text/javascript'>\n";
+            echo "alert('You are not an admin!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
+        }
     ?>
 </head>
 <body class="dark bg-main-blue font-sans">
