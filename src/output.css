@@ -886,6 +886,9 @@
   .top-1\/2 {
     top: calc(1/2 * 100%);
   }
+  .top-3 {
+    top: calc(var(--spacing) * 3);
+  }
   .top-6 {
     top: calc(var(--spacing) * 6);
   }
@@ -897,6 +900,9 @@
   }
   .right-0 {
     right: calc(var(--spacing) * 0);
+  }
+  .right-3 {
+    right: calc(var(--spacing) * 3);
   }
   .bottom-0 {
     bottom: calc(var(--spacing) * 0);
@@ -1375,6 +1381,9 @@
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
   }
+  .ml-2 {
+    margin-left: calc(var(--spacing) * 2);
+  }
   .ml-auto {
     margin-left: auto;
   }
@@ -1641,6 +1650,9 @@
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
+  }
+  .w-20 {
+    width: calc(var(--spacing) * 20);
   }
   .w-24 {
     width: calc(var(--spacing) * 24);
@@ -2175,6 +2187,10 @@
     border-left-style: var(--tw-border-style);
     border-left-width: 8px;
   }
+  .border-dashed {
+    --tw-border-style: dashed;
+    border-style: dashed;
+  }
   .dark {
     & .apexcharts-canvas .apexcharts-tooltip {
       background-color: var(--color-neutral-secondary-medium) !important;
@@ -2349,6 +2365,9 @@
   }
   .bg-\[\#708238\]\/20 {
     background-color: color-mix(in oklab, #708238 20%, transparent);
+  }
+  .bg-\[\#D4AF37\] {
+    background-color: #D4AF37;
   }
   .bg-black {
     background-color: var(--color-black);
@@ -2580,6 +2599,10 @@
     }
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
+  .to-blue-400 {
+    --tw-gradient-to: var(--color-blue-400);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
   .to-blue-700 {
     --tw-gradient-to: var(--color-blue-700);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -2705,6 +2728,9 @@
   }
   .p-12 {
     padding: calc(var(--spacing) * 12);
+  }
+  .p-16 {
+    padding: calc(var(--spacing) * 16);
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
@@ -3088,6 +3114,9 @@
   }
   .text-\[\#708238\] {
     color: #708238;
+  }
+  .text-black {
+    color: var(--color-black);
   }
   .text-blue-400 {
     color: var(--color-blue-400);
@@ -3487,6 +3516,13 @@
       }
     }
   }
+  .hover\:border-gray-600 {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-gray-600);
+      }
+    }
+  }
   .hover\:bg-\[\#1a2332\] {
     &:hover {
       @media (hover: hover) {
@@ -3501,6 +3537,13 @@
       }
     }
   }
+  .hover\:bg-\[\#5a6b2d\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #5a6b2d;
+      }
+    }
+  }
   .hover\:bg-\[\#006D4C\] {
     &:hover {
       @media (hover: hover) {
@@ -3512,6 +3555,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: #4752C4;
+      }
+    }
+  }
+  .hover\:bg-\[\#b5952f\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #b5952f;
       }
     }
   }
