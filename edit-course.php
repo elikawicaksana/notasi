@@ -21,12 +21,13 @@
             echo "alert('Please login first!');";
             echo "window.location = ('index.php');";
             echo "</script>";
-            if($_SESSION['role']!='Mentor'){
-                echo "<script type='text/javascript'>\n";
-                echo "alert('You are not a Mentor!');";
-                echo "window.location = ('index.php');";
-                echo "</script>";
-            }
+        }
+
+        if($_SESSION['role']!='Mentor'){
+            echo "<script type='text/javascript'>\n";
+            echo "alert('You are not a mentor!');";
+            echo "window.location = ('index.php');";
+            echo "</script>";
         }
 
         $id_course = $_GET['id_course'];
