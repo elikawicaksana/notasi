@@ -78,7 +78,7 @@
     
     <nav class="fixed w-full z-50 top-0 start-0 bg-[#0f1523] border-b border-gray-800 h-16 flex items-center shadow-md">
         <div class="w-full flex items-center justify-between px-6">
-            <a href="dashboard.php" class="flex items-center text-gray-400 hover:text-white transition-colors group text-sm font-medium">
+            <a href="dashboard-student.php" class="flex items-center text-gray-400 hover:text-white transition-colors group text-sm font-medium">
                 <div class="w-8 h-8 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center mr-3 group-hover:border-gray-500 transition-colors">
                     <i class="fa-solid fa-chevron-left text-xs"></i>
                 </div>
