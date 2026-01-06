@@ -14,14 +14,13 @@
             display: none;
         }
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
         }
     </style>
     <?php
         include 'config/koneksi.php';
 
-        // 1. Fetch all PUBLISHED courses with Mentor Name and Module Count
         $query = "SELECT 
                     c.*, 
                     u.name AS mentor_name,
@@ -33,7 +32,6 @@
         
         $result = mysqli_query($conn, $query);
 
-        // 2. Group courses by Category
         $coursesByCategory = [];
         if ($result) {
             while ($row = mysqli_fetch_assoc($result)) {

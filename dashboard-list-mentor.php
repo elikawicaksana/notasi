@@ -61,15 +61,11 @@
                             <h2 class="text-2xl font-semibold text-heading">Mentors List</h2>
                             <p class="text-[#708238] font-medium">Active Members</p>
                         </div>
-                        
-                        <div class="flex flex-col md:flex-row items-center w-full md:w-auto space-y-2 md:space-y-0 md:space-x-3">
-                            <div class="relative w-full md:w-auto">
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg class="w-4 h-4 text-body" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
-                                </div>
-                                <input type="text" id="simple-search" class="block w-full max-w-96 ps-9 pe-3 py-2 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Search Mentor...">
-                            </div>
-                        </div>
+                        <a href="add-new-user.php">
+                            <button type="button" class="inline-flex items-center text-white bg-[#708238] hover:bg-[#006D4C] box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                                <p><i class="fa-solid fa-plus"></i> Add New User</p>
+                            </button>
+                        </a>
                     </div>
 
                     <div class="overflow-x-auto">

@@ -33,19 +33,11 @@
                 <span class="font-bold text-white">89% Pelajar</span> Notasi Lebih Percaya Diri <br/><span class="font-bold text-white">Dengan Suara Mereka.</span>
             </p>
             <div class="relative w-full max-w-4xl mx-auto aspect-video bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10 mb-10">
-                <iframe 
-                    class="w-full h-full" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=CoXv8" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-                </iframe>
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/jx8QQFK6g5o?si=fxjMuZZUA2rUCldl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
-            <button type="button" class="text-white bg-gradient-to-r from-moss-light to-moss-dark hover:brightness-110 font-semibold text-base px-11 py-2 shadow-lg shadow-moss-dark/20 transition-all transform hover:scale-105">
+            <a href="course.php"><button type="button" class="text-white bg-gradient-to-r from-moss-light to-moss-dark hover:brightness-110 font-semibold text-base px-11 py-2 shadow-lg shadow-moss-dark/20 transition-all transform hover:scale-105">
                 Mulai Sekarang
-            </button>
+            </button></a>
         </div>
     </section>
 
@@ -116,9 +108,9 @@
                     <p class="text-white text-lg mb-8 font-light leading-relaxed">
                         Setiap suara itu unik dan punya potensi. Saat kamu memahami teknik vokal dan karakter suaramu, kamu akan mulai menghargai suara yang kamu miliki.
                     </p>
-                    <button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-semibold leading-4 text-sm px-8 py-3 focus:outline-none">
+                    <a href="course.php"><button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-semibold leading-4 text-sm px-8 py-3 focus:outline-none">
                         Mulai Bernyanyi
-                    </button>
+                    </button></a>
                 </div>
                 <div class="relative order-1 md:order-2 group">
                     <div class="relative rounded-3xl overflow-hidden shadow-2xl h-[550px] w-full">
@@ -148,9 +140,9 @@
                     <p class="text-white text-lg mb-8 font-light leading-relaxed">
                         Langkah terberat selalu ada di awal. Kamu mungkin ragu, malu, atau takut terdengar buruk. Tapi satu langkah kecil hari ini bisa jadi awal dari suara yang lebih kuat besok.
                     </p>
-                    <button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-semibold leading-4 text-sm px-8 py-3 focus:outline-none">
+                    <a href="course.php"><button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-semibold leading-4 text-sm px-8 py-3 focus:outline-none">
                         Latihan Sekarang
-                    </button>
+                    </button></a>
                 </div>
             </div>
         </div>
@@ -225,9 +217,9 @@
             <p class="text-white text-xs md:text-sm font-semibold uppercase mb-10">
                 ED SHEERAN
             </p>
-            <button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-semibold leading-4 px-11 py-3 text-md focus:outline-none">
+            <a href="course.php"><button type="button" class="text-white bg-gradient-green box-border border border-transparent hover:animate-gradient shadow-xs font-semibold leading-4 px-11 py-3 text-md focus:outline-none">
                 Mulai Sekarang
-            </button>
+            </button></a>
         </div>
     </section>
 </main>

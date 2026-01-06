@@ -111,13 +111,13 @@
                                             <?= $row['total_modules'] ?> Modules
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 text-center">
+                                    <td class="px-4 py-4 text-center">
                                         <span class="text-[#8FA348] font-semibold bg-[#708238]/20 border border-[#708238] px-3 py-1 rounded text-xs">
                                             <i class="fa-solid fa-users mr-1"></i> <?= $row['total_enrolled'] ?> Students
                                         </span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="view-course.php?id_course=<?= $idCourse ?>" class="font-medium text-blue-400 hover:text-fg-brand hover:underline transition-colors">View</a> | 
+                                        <a href="course-detail.php?id_course=<?= $idCourse ?>" class="font-medium text-blue-400 hover:text-fg-brand hover:underline transition-colors" target="_blank">View</a> | 
                                         <button id="btnDel" class="font-medium text-fg-danger hover:text-danger hover:underline transition-colors" data-id="<?= $idCourse ?>">Delete</button>
                                     </td>
                                 </tr>

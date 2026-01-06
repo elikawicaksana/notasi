@@ -55,7 +55,7 @@
     <div class="p-8 sm:ml-64 mt-14">
         <div class="p-4">
             <div class="w-full mb-24"> 
-                
+                <h1 class="text-5xl font-medium text-heading">Welcome back, <?php echo $_SESSION['name']; ?>! 👋</h1>
             </div>
         </div>
     </div>
