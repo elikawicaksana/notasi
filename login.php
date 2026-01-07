@@ -80,7 +80,7 @@
                 <img class="absolute inset-0 w-full h-full object-cover" src="dist/img/bg-login.jpg" alt="Login Background">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#040911] via-[#006D4C]/40 to-transparent opacity-90"></div>
                 <div class="absolute inset-0 z-10 flex flex-col justify-end p-12 text-white">
-                    <a href="index.html"><img src="dist/img/logo.png" class="h-14 mb-6 invert brightness-0 contrast-200 self-start" alt="Logo White"></a>
+                    <a href="index.php"><img src="dist/img/logo.png" class="h-14 mb-6 invert brightness-0 contrast-200 self-start" alt="Logo White"></a>
                     <h2 class="text-5xl font-bold leading-tight mb-4">
                         Unlock Your True Voice.
                     </h2>

@@ -80,7 +80,7 @@
             <?php 
                     }
                 } else {
-                    echo '<p class="text-white text-center col-span-3">Belum ada modul tersedia.</p>';
+                    echo '<p class="text-white text-center col-span-3">Belum ada course tersedia.</p>';
                 }
             ?>
         </div>

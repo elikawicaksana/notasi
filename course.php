@@ -57,9 +57,7 @@
     <section class="py-5 px-4 md:px-8 bg-main-blue relative">
         
         <?php 
-        $sectionIndex = 1; // Counter for unique IDs for the carousels
-        
-        // Loop through each Category
+        $sectionIndex = 1; 
         foreach ($coursesByCategory as $categoryName => $courses) { 
             $carouselId = "carousel-" . $sectionIndex; 
         ?>
@@ -81,7 +79,6 @@
                 <div id="<?php echo $carouselId; ?>" class="flex overflow-x-auto gap-5 pb-4 snap-x snap-mandatory scroll-smooth no-scrollbar">
                     
                     <?php foreach ($courses as $course) { 
-                        // Handle thumbnail fallback
                         $thumbnail = !empty($course['thumbnail']) ? $course['thumbnail'] : 'dist/img/thumbnail.png';
                     ?>
                         <a href="course-detail.php?id_course=<?php echo $course['id_course']; ?>" class="block min-w-[280px] md:min-w-[320px] snap-center group relative rounded-xl overflow-hidden cursor-pointer bg-gray-900 border border-white/10 hover:border-[#006D4C] transition-all">
@@ -112,10 +109,9 @@
                 </div>
             </div>
         <?php 
-            $sectionIndex++; // Increment for the next category ID
+            $sectionIndex++; 
         } 
-        
-        // Show message if no courses found
+
         if (empty($coursesByCategory)) {
             echo '<div class="text-center text-gray-400 py-10">No published courses available yet.</div>';
         }
