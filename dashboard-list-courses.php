@@ -191,29 +191,34 @@
         var tableData=$('#tableData');
 
         tableData.on("click","#btnDel",function(){
-            var validasi=confirm("Are you sure you want to delete this user?");
+            var validasi = confirm("WARNING: This will permanently delete the course and ALL related data including:\n\n• All course modules\n• All student enrollments\n• All student progress\n• All certificates\n\nThis action CANNOT be undone!\n\nAre you sure you want to continue?");
             if(validasi){
                 var btn=$(this);
                 var id_course=$(this).attr("data-id");
-                alert(id_course);   
-                // var promise=$.ajax({
-                //     url  : 'proses/prosesQuery.php',
-                //     type : 'POST',
-                //     dataType: 'json',
-                //     cache   : false,
-                //     data    : {
-                //         flag  : "prosesHapusCourse",
-                //         id_course : id_course
-                //     },
-                //     success: function(data){
-                //         if(data.success == "sukses"){
-                //             alert("Successfully deleted data!");
-                //             location.reload(); 
-                //         } else {
-                //             alert("Failed to delete data.");
-                //         }
-                //     }
-                // });
+                // alert(id_course);   
+                var promise=$.ajax({
+                    url  : 'proses/prosesQuery.php',
+                    type : 'POST',
+                    dataType: 'json',
+                    cache   : false,
+                    data    : {
+                        flag  : "prosesHapusCourse",
+                        id_course : id_course
+                    },
+                    success: function(data){
+                        if(data.success == "sukses"){
+                            alert(data.message);
+                            location.reload(); 
+                        } else if(data.success == "unauthorized"){
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function(xhr, status, error){
+                        alert("An error occurred: " + error);
+                    }
+                });
             }else{
                 alert("Be careful!");
             }

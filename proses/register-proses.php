@@ -31,7 +31,7 @@
     }else{
         $selQuery=mysqli_query($conn,"SELECT * FROM db_notasi.tb_user WHERE username='".mysqli_real_escape_string($conn,trim($_POST['username']))."'") OR die(mysqli_error($conn));
         $jumQuery=mysqli_num_rows($selQuery);
-        if($jumQuery2>0){
+        if($jumQuery>0){
             echo "<script type='text/javascript'>
             alert('Sorry, Username already in use');
             window.location = ('../register.php');

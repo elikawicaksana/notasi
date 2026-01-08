@@ -16,14 +16,13 @@
             display: none;
         }
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  
+            scrollbar-width: none; 
         }
 
         input:focus {
             border-color: #708238 !important;
             --tw-ring-color: #708238 !important;
-            /* Ini bikin efek glow hijaunya */
             box-shadow: 0 0 0 1px #708238 !important; 
             outline: none !important;
         }

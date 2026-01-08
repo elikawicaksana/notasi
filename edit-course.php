@@ -35,16 +35,13 @@
         $id_course = $_GET['id_course'];
         $id_mentor = $_SESSION['id_user'];
 
-        // Fetch Course Data & Verify Ownership
         $queryCourse = mysqli_query($conn, "SELECT * FROM db_notasi.tb_courses WHERE id_course = '$id_course' AND id_mentor = '$id_mentor'");
         $course = mysqli_fetch_assoc($queryCourse);
 
         if (!$course) {
-            // This runs if the course doesn't exist OR if you are not the owner
             echo "<script>alert('Course not found or access denied.'); ... </script>";
         }
 
-        // Fetch Existing Modules
         $queryModules = mysqli_query($conn, "SELECT * FROM db_notasi.tb_modules WHERE id_course = '$id_course' ORDER BY `order` ASC");
     ?>
 </head>

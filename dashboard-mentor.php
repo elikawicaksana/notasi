@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notasi | Admin List</title>
+    <title>Notasi | Dashboard Mentor</title>
     <link href="src/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +16,8 @@
             display: none;
         }
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none; 
+            scrollbar-width: none;  
         }
     </style>
     <?php
@@ -36,17 +36,6 @@
             echo "window.location = ('index.php');";
             echo "</script>";
         }
-
-        $limit = 5;
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $start = ($page > 1) ? ($page * $limit) - $limit : 0;
-
-        $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM db_notasi.tb_user WHERE role = 'Admin'");
-        $rowTotal = mysqli_fetch_assoc($queryTotal);
-        $totalData = $rowTotal['total'];
-        $totalPages = ceil($totalData / $limit);
-
-        $queryAdmins = mysqli_query($conn, "SELECT * FROM db_notasi.tb_user WHERE role = 'Admin' ORDER BY id_user DESC LIMIT $start, $limit");
     ?>
 </head>
 <body class="dark bg-main-blue font-sans">

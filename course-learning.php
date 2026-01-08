@@ -45,7 +45,7 @@
         $id_enroll = $enrollment['id_enroll'];
         $current_progress = $enrollment['progress_percentage'];
         
-        // NEW: Check if course is officially finished
+        // Check if course is officially finished
         $is_course_finished = ($enrollment['is_completed'] == 1);
 
         // 2. Fetch Course

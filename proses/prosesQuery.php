@@ -79,7 +79,7 @@
         $checkOwner = mysqli_query($conn, "SELECT id_mentor FROM db_notasi.tb_courses WHERE id_course='".$id_course."'");
         $owner = mysqli_fetch_assoc($checkOwner);
         
-        if($owner && $owner['id_mentor'] == $id_mentor) {
+        if($owner && $owner['id_mentor'] == $id_mentor || $_SESSION['role'] == "Admin") {
             mysqli_begin_transaction($conn);
             
             try {
@@ -264,7 +264,6 @@
 
         mysqli_begin_transaction($conn);
         try {
-            // Update Course - REMOVED 'updated_at' because your DB doesn't have it
             $sqlCourse = "UPDATE db_notasi.tb_courses 
                           SET title='$title', category='$category', `desc`='$desc', `status`='$status', thumbnail='$db_thumbnail_path'
                           WHERE id_course='$id_course'";

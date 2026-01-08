@@ -38,7 +38,6 @@
         
         $id_mentor = $_SESSION['id_user'];
 
-        // Count total Draft courses for this mentor
         $queryTotal = mysqli_query($conn, "SELECT COUNT(*) as total FROM db_notasi.tb_courses WHERE id_mentor = '$id_mentor' AND `status`= 'Draft'");
         $rowTotal = mysqli_fetch_assoc($queryTotal);
         $totalData = $rowTotal['total'];
@@ -123,21 +122,17 @@
                                 </div>
                             <?php } ?>
                         </div>
-                        <!-- Pagination Controls -->
+
                         <?php if($totalPages > 1): ?>
                             <nav class="flex flex-col md:flex-row justify-between items-center mt-8 space-y-3 md:space-y-0" aria-label="Course pagination">
-                                
-                                <!-- Showing info -->
+
                                 <span class="text-sm font-normal text-gray-400">
                                     Showing <span class="font-semibold text-white"><?= ($totalData > 0) ? $start + 1 : 0 ?></span> 
                                     to <span class="font-semibold text-white"><?= min($start + $limit, $totalData) ?></span> 
                                     of <span class="font-semibold text-white"><?= $totalData ?></span> courses
                                 </span>
-                                
-                                <!-- Page buttons -->
+
                                 <ul class="inline-flex items-center gap-2 text-sm h-8">
-                                    
-                                    <!-- Previous Button -->
                                     <li>
                                         <?php if($page > 1): ?>
                                             <a href="?page=<?= $page - 1 ?>" class="flex items-center justify-center px-3 h-9 leading-tight text-gray-400 bg-transparent border border-gray-600 rounded-lg hover:bg-gray-700 hover:text-white transition-all">
@@ -155,7 +150,6 @@
                                         <?php endif; ?>
                                     </li>
 
-                                    <!-- Page Numbers -->
                                     <?php for($i = 1; $i <= $totalPages; $i++): ?>
                                         <li>
                                             <?php if($i == $page): ?>
@@ -170,7 +164,6 @@
                                         </li>
                                     <?php endfor; ?>
 
-                                    <!-- Next Button -->
                                     <li>
                                         <?php if($page < $totalPages): ?>
                                             <a href="?page=<?= $page + 1 ?>" class="flex items-center justify-center px-3 h-9 leading-tight text-gray-400 bg-transparent border border-gray-600 rounded-lg hover:bg-gray-700 hover:text-white transition-all">

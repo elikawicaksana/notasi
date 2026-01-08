@@ -96,7 +96,7 @@
                         </div>
 
                         <div id="moduleContainer" class="space-y-4">
-                            </div>
+                        </div>
                     </div>
 
                     <div class="flex items-center space-x-4">
@@ -115,16 +115,25 @@
         const commonEmojis = ['😀', '😂', '😍', '🔥', '👍', '👎', '💡', '🎵', '🎤', '🎹', '🎸', '⭐', '✅', '❌', '🚀', '📝'];
         
         function updateModuleIndexes() {
+            // 1. Ambil semua elemen yang punya kelas 'module-item' (semua kotak modul)
             const modules = document.querySelectorAll('.module-item');
             
+            // 2. Loop (cek satu per satu) setiap modul
             modules.forEach((module, index) => {
+                // index dimulai dari 0. Jadi tambah 1.
                 const newNum = index + 1;
+
+                // 3. Update Judul Visual (Contoh: "Module 1", "Module 2")
                 const title = module.querySelector('h4');
                 title.textContent = `Module ${newNum}`;
+
+                // 4. Update Data Backend (name="modules[0][title]")
+                // Ini agar PHP bisa baca datanya berurutan.
                 const inputs = module.querySelectorAll('input, textarea, select');
                 inputs.forEach(input => {
                     const name = input.getAttribute('name');
                     if (name) {
+                        // Regex: Cari teks 'modules[angka]', ganti dengan 'modules[index_baru]'
                         const newName = name.replace(/modules\[\d+\]/, `modules[${index}]`);
                         input.setAttribute('name', newName);
                     }
@@ -186,6 +195,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Langsung bikin 1 modul saat pertama kali buka halaman
             var container = document.getElementById('moduleContainer');
             container.insertAdjacentHTML('beforeend', createModuleHTML(0, 1));
         });
@@ -235,28 +245,48 @@
             }
 
             if (e.target.closest('.emoji-btn')) {
+                // 1. Cari Wadah Pembungkus (Wrapper)
                 const wrapper = e.target.closest('.emoji-wrapper');
+                
+                // 2. Cari Menu Emoji di dalam wadah tersebut
                 const picker = wrapper.querySelector('.emoji-picker');
+                
+                // 3. Logika "Tutup Tetangga"
                 document.querySelectorAll('.emoji-picker').forEach(el => {
                     if (el !== picker) el.classList.add('hidden');
                 });
+                
+                // 4. Buka/Tutup Diri Sendiri (Toggle)
                 picker.classList.toggle('hidden');
+                
+                // 5. Stop Penyebaran
                 e.stopPropagation();
             }
 
             if (e.target.closest('.emoji-option')) {
+                // 1. Ambil Teks Emojinya
                 const emoji = e.target.closest('.emoji-option').innerText;
+                
+                // 2. Cari Textarea Tujuan
                 const moduleItem = e.target.closest('.module-item');
                 const textarea = moduleItem.querySelector('.content-area');
+                
+                // 3. Ambil Menu Picker (buat ditutup nanti)
                 const picker = e.target.closest('.emoji-picker');
 
+                // 4. Deteksi Posisi Kursor
                 const start = textarea.selectionStart;
                 const end = textarea.selectionEnd;
                 const text = textarea.value;
                 
+                // 5. Operasi Bedah Teks (Inserting)
                 textarea.value = text.substring(0, start) + emoji + text.substring(end);
+                
+                // 6. Kembalikan Fokus & Rapikan Kursor
                 textarea.focus();
                 textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
+                
+                // 7. Tutup Menu
                 picker.classList.add('hidden');
             }
         });

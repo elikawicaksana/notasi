@@ -81,20 +81,10 @@
                             </thead>
                             <tbody>
                                 <?php 
-                                    // LOOP DATA DARI DATABASE
                                     if(mysqli_num_rows($queryAdmins) > 0){
                                         while($row = mysqli_fetch_assoc($queryAdmins)) {
                                             $idUser = $row['id_user'];
-                                            // Fallback foto profile
                                             $foto = !empty($row['foto']) ? $row['foto'] : "https://flowbite.com/docs/images/people/profile-picture-5.jpg";
-                                            
-                                            // Query Hitung Enrolled
-                                            $qEnroll = mysqli_query($conn, "SELECT COUNT(*) as jml FROM db_notasi.tb_enrollments WHERE id_user = '$idUser'");
-                                            $jmlEnroll = mysqli_fetch_assoc($qEnroll)['jml'];
-
-                                            // Query Hitung Completed
-                                            $qComplete = mysqli_query($conn, "SELECT COUNT(*) as jml FROM db_notasi.tb_enrollments WHERE id_user = '$idUser' AND is_completed = '1'");
-                                            $jmlComplete = mysqli_fetch_assoc($qComplete)['jml'];
                                 ?>
                                 <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium transition-colors duration-200">
                                     
