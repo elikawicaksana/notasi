@@ -26,10 +26,19 @@ CREATE TABLE `tb_certificates` (
   `id_course` int DEFAULT NULL,
   `certificate_code` varchar(255) DEFAULT NULL,
   `issued_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_certificate`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id_certificate`),
+  KEY `id_course` (`id_course`),
+  KEY `id_user` (`id_user`),
+  CONSTRAINT `tb_certificates_ibfk_1` FOREIGN KEY (`id_course`) REFERENCES `tb_courses` (`id_course`),
+  CONSTRAINT `tb_certificates_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_certificates` */
+
+insert  into `tb_certificates`(`id_certificate`,`id_user`,`id_course`,`certificate_code`,`issued_at`) values 
+(4,5,23,'NOTASI-20260108-43208358','2026-01-08 13:37:24'),
+(5,5,27,'NOTASI-20260108-07238BEE','2026-01-08 15:00:42'),
+(6,5,17,'NOTASI-20260108-C39908F0','2026-01-08 19:27:50');
 
 /*Table structure for table `tb_courses` */
 
@@ -44,8 +53,10 @@ CREATE TABLE `tb_courses` (
   `thumbnail` text,
   `status` enum('Draft','Published') DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_course`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id_course`),
+  KEY `id_mentor` (`id_mentor`),
+  CONSTRAINT `tb_courses_ibfk_1` FOREIGN KEY (`id_mentor`) REFERENCES `tb_user` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_courses` */
 
@@ -77,10 +88,22 @@ CREATE TABLE `tb_enrollments` (
   `is_completed` tinyint(1) DEFAULT '0',
   `enrolled_at` timestamp NULL DEFAULT NULL,
   `completed_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_enroll`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id_enroll`),
+  KEY `id_user` (`id_user`),
+  KEY `id_course` (`id_course`),
+  CONSTRAINT `tb_enrollments_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`),
+  CONSTRAINT `tb_enrollments_ibfk_2` FOREIGN KEY (`id_course`) REFERENCES `tb_courses` (`id_course`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_enrollments` */
+
+insert  into `tb_enrollments`(`id_enroll`,`id_user`,`id_course`,`progress_percentage`,`is_completed`,`enrolled_at`,`completed_at`) values 
+(9,5,29,0,0,'2026-01-07 20:37:51',NULL),
+(10,5,19,0,0,'2026-01-07 20:37:58',NULL),
+(11,5,17,100,1,'2026-01-07 20:38:13','2026-01-08 19:30:21'),
+(12,5,23,100,1,'2026-01-07 20:38:24','2026-01-08 13:37:24'),
+(13,5,27,100,1,'2026-01-07 20:38:32','2026-01-08 15:00:42'),
+(14,5,21,50,0,'2026-01-08 14:59:13',NULL);
 
 /*Table structure for table `tb_module_completions` */
 
@@ -91,10 +114,34 @@ CREATE TABLE `tb_module_completions` (
   `id_enroll` int DEFAULT NULL,
   `id_module` int DEFAULT NULL,
   `is_completed` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`id_completion`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id_completion`),
+  KEY `id_enroll` (`id_enroll`),
+  KEY `id_module` (`id_module`),
+  CONSTRAINT `tb_module_completions_ibfk_1` FOREIGN KEY (`id_enroll`) REFERENCES `tb_enrollments` (`id_enroll`),
+  CONSTRAINT `tb_module_completions_ibfk_2` FOREIGN KEY (`id_module`) REFERENCES `tb_modules` (`id_modules`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tb_module_completions` */
+
+insert  into `tb_module_completions`(`id_completion`,`id_enroll`,`id_module`,`is_completed`) values 
+(21,12,97,1),
+(22,12,98,1),
+(23,12,99,1),
+(24,12,100,1),
+(25,12,101,1),
+(26,14,70,1),
+(27,14,71,0),
+(28,13,136,1),
+(29,13,139,1),
+(30,13,137,1),
+(31,13,138,1),
+(32,13,140,1),
+(33,11,39,1),
+(34,11,40,1),
+(35,11,41,1),
+(36,11,42,1),
+(37,11,43,1),
+(38,11,44,1);
 
 /*Table structure for table `tb_modules` */
 
